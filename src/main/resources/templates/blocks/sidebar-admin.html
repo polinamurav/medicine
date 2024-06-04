@@ -1,0 +1,35 @@
+<!-- шапка боковая панель АДМИН -->
+<div th:fragment="sidebar" xmlns:th="http://www.w3.org/1999/xhtml">
+    <aside class="sidebar">
+        <div class="logo">
+            <img th:src="@{/images/all/логотип.png}" alt="Логотип">
+            <div>Вита-центр</div>
+        </div>
+        <nav class="navigation">
+            <ul>
+                <li class="navigation-item">
+                    <a href="/admin/users" th:classappend="${currentPath == '/admin/users'} ? ' active'">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M10 12.5C12.7614 12.5 15 10.2614 15 7.5C15 4.73858 12.7614 2.5 10 2.5C7.23858 2.5 5 4.73858 5 7.5C5 10.2614 7.23858 12.5 10 12.5Z"
+                                  stroke="#626C70" stroke-width="1.25" stroke-miterlimit="10"/>
+                            <path d="M2.4209 16.8743C3.1893 15.5442 4.29419 14.4398 5.62456 13.672C6.95493 12.9042 8.46393 12.5 9.99997 12.5C11.536 12.5 13.045 12.9043 14.3754 13.6721C15.7057 14.44 16.8106 15.5444 17.579 16.8744"
+                                  stroke="#626C70" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        <span>Пользователи</span>
+                    </a>
+                </li>
+                <li class="navigation-item">
+                    <a href="/admin/report" th:classappend="${currentPath == '/admin/report'} ? ' active'">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M2.5 16.25V5C2.5 4.83424 2.56585 4.67527 2.68306 4.55806C2.80027 4.44085 2.95924 4.375 3.125 4.375H7.29167C7.4269 4.375 7.55848 4.41886 7.66667 4.5L9.83333 6.125C9.94152 6.20614 10.0731 6.25 10.2083 6.25H15.625C15.7908 6.25 15.9497 6.31585 16.0669 6.43306C16.1842 6.55027 16.25 6.70924 16.25 6.875V8.75"
+                                  stroke="#626C70" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M2.5 16.25L4.84285 10.3929C4.88924 10.2769 4.96932 10.1775 5.07275 10.1075C5.17619 10.0374 5.29823 10 5.42315 10H9.18576C9.30916 10 9.42979 9.96348 9.53245 9.89503L11.0925 8.85497C11.1952 8.78652 11.3158 8.75 11.4392 8.75H17.8829C17.9819 8.75 18.0795 8.77353 18.1677 8.81866C18.2558 8.86379 18.332 8.92922 18.3899 9.00956C18.4478 9.0899 18.4858 9.18284 18.5007 9.28074C18.5156 9.37864 18.5071 9.47869 18.4758 9.57264L16.25 16.25H2.5Z"
+                                  stroke="#626C70" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        <span>Файловый менеджер</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </aside>
+</div>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Registration</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@700&family=Raleway:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/formLogin.css}">
+
+    <link rel="icon" type="image/png" th:href="@{/images/all/логотип.png/логотип.png}"/>
+    <meta name="_csrf" content="${_csrf.token}"/>
+    <meta name="_csrf_header" content="${_csrf.headerName}"/>
+</head>
+<body>
+
+<div class="login-page">
+    <div class="form">
+        <form class="register-form" th:action="@{/registration}"  method="POST">
+            <!-- мой крестик -->
+            <a href="/">
+                <div class="closeModal"></div>
+            </a>
+            <h2><i class="fas fa-lock"></i> Создать аккаунт</h2>
+            <input type="text" placeholder="Имя" name="name" class="input" id="name" required/>
+            <input type="text" placeholder="Фамилия" name="surname" class="input" id="surname" required/>
+            <input type="text" placeholder="Логин" name="username" class="input" id="username" required/>
+            <input type="date" placeholder="Дата рождения" name="birth" class="input" id="birth" required/>
+            <input type="email" placeholder="Почта" name="email" class="input" id="email" required/>
+            <input type="password" placeholder="Пароль" name="password" class="input" id="password" required/>
+            <div style="display: none">
+                <label for="isDoctor">Регистрация как доктор: </label>
+                <input type="checkbox" id="isDoctor" name="isDoctor">
+            </div>
+            <input type="hidden" data-th-name="${_csrf.parameterName}" data-th-value="${_csrf.token}">
+            <button type="submit">создать</button>
+            <p class="message">Уже зарегистрирован? <a href="authorization.html">Войти в аккаунт</a></p>
+        </form>
+    </div>
+</div>
+
+
+<script th:inline="javascript">
+    window.onload = function () {
+
+        let form = document.getElementsByClassName('register-form')[0];
+        form.reset();
+
+        let username = document.getElementById('username');
+        username.value = '';
+
+        let name = document.getElementById('name');
+        let surname = document.getElementById('surname');
+
+        //В поле "Name" запретите вводить цифры.
+        name.onkeydown = (e) => {
+            let number = parseInt(e.key);
+            if (!isNaN(number)) {
+                return false;
+            }
+        }
+
+        surname.onkeydown = (e) => {
+            let number = parseInt(e.key);
+            if (!isNaN(number)) {
+                return false;
+            }
+        }
+
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Онлайн-запись</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style-user.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/adaptive.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/adaptive-user.css}">
+
+    <script th:src="@{/jquery-3.7.1.min.js}"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="icon" type="image/png" th:href="@{../images/логотип.png}"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="_csrf" content="${_csrf.token}"/>
+    <meta name="_csrf_header" content="${_csrf.headerName}"/>
+</head>
+<body>
+
+<!-- шапка HEADER-->
+<div th:replace="blocks/header-user :: header"></div>
+
+<div class="appointment">
+    <div class="container">
+        <h1>Онлайн запись на прием</h1>
+        <form th:action="@{/appointment/create}" th:object="${appointment}" method="post">
+            <div class="appointment-form">
+                <div class="appointment-form-text">Услуга:</div>
+                <select class="service-select appointment-form-input" name="serviceId">
+                    <option th:each="service : ${services}" th:value="${service.idservice}"
+                            th:text="${service.name}"
+                            th:selected="${appointment.service?.idservice} == ${service.idservice}"></option>
+                </select>
+                <!-- Скрытое поле выбора специалиста -->
+                <div  id="doctorSelectWrapper" style="display: none;">
+                    <div class="appointment-form-text">Специалист:</div>
+                    <select id="doctorSelect" class="doctor-select appointment-form-input" name="doctorId">
+                        <option th:each="doctor : ${doctors}" th:value="${doctor.iddoctor}"
+                                th:text="${doctor.name} + ' ' + ${doctor.surname}"
+                                th:selected="${appointment.doctor?.iddoctor} == ${doctor.iddoctor}"></option>
+                    </select>
+                </div>
+                <div class="appointment-form-text">Дата:</div>
+                <input id="appointment-time" name="appointmentDate" type="datetime-local" class="appointment-form-input" th:field="*{appointmentDate}">
+                <div class="appointment-form-text">Комментарий:</div>
+                <textarea class="appointment-form-input" placeholder="Уточнения к записи" th:field="*{comment}"></textarea>
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                <button type="submit" class="button" onclick="return validateAppointmentTime();"><span>Записаться на прием</span></button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<script th:inline="javascript">
+    function validateAppointmentTime() {
+        var appointmentTime = document.getElementById("appointment-time").value;
+        var appointmentDate = new Date(appointmentTime);
+        var appointmentHour = appointmentDate.getHours();
+        var appointmentDay = appointmentDate.getDay();
+
+        if (appointmentHour < 7 || appointmentHour >= 21 || appointmentDay === 6 || appointmentDay === 0) {
+            alert("Выбрано недопустимое время или день недели для записи на прием. Выберите будний день и время с 8 до 21");
+            return false;
+        }
+        return true;
+    }
+
+
+    // Получаем значение doctorId из URL
+    let doctorId = getUrlParameter('doctorId');
+
+    function getUrlParameter(name) {
+        name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+        let regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+        let results = regex.exec(location.search);
+        return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+    }
+
+    // Если doctorId не пустой или не равен null, то показываем поле выбора специалиста
+    if (doctorId !== '' && doctorId !== null) {
+        document.getElementById('doctorSelectWrapper').style.display = 'block';
+    }
+
+
+
+    // Обработка выбора услуги
+    document.querySelector('.service-select').addEventListener('change', function() {
+        var selectedServiceId = this.value; // Получаем выбранный id услуги
+
+        // Отправляем AJAX-запрос для получения доктора, соответствующего выбранной услуге
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', '/getDoctorByService?serviceId=' + selectedServiceId);
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                var doctorId = xhr.responseText; // Получаем id доктора из ответа
+                if (doctorId) {
+                    // Если есть id доктора, устанавливаем его в скрытом поле и отображаем форму выбора доктора
+                    document.getElementById('doctorId').value = doctorId;
+                    document.getElementById('doctorSelectWrapper').style.display = 'block';
+                } else {
+                    // Если id доктора не получен, скрываем форму выбора доктора
+                    document.getElementById('doctorSelectWrapper').style.display = 'none';
+                }
+            }
+        };
+        xhr.send();
+    });
+
+</script>
+</body>
+</html>

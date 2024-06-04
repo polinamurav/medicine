@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Редактировать аккаунт</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/admin.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/adaptive.css}">
+
+    <link rel="icon" type="image/png" th:href="@{../images/логотип.png}"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="_csrf" content="${_csrf.token}"/>
+    <meta name="_csrf_header" content="${_csrf.headerName}"/>
+</head>
+<body>
+
+<div class="layout">
+    <!-- шапка боковая панель ДОКТОР -->
+    <div th:replace="blocks/sidebar-doctor :: sidebar"></div>
+
+    <div class="content">
+        <!-- шапка HEADER доктора и админа с их именем -->
+        <div th:replace="blocks/header-D-A-main :: header"></div>
+
+        <div class="edit-account">
+            <h1>Редактировать профиль</h1>
+            <form th:object="${doctor}" method="post" enctype="multipart/form-data"
+                  th:action="@{/doctor/edit-acc/{id}(id=${doctor.iddoctor})}" class="edit-acc-form">
+                <input type="hidden" th:field="*{iddoctor}"/>
+                <input type="hidden" data-th-name="${_csrf.parameterName}" data-th-value="${_csrf.token}">
+                <div class="card__image">
+                    <input type="file" name="file" accept="image/*">
+                    <input type="hidden" data-th-name="${_csrf.parameterName}" data-th-value="${_csrf.token}">
+                </div>
+                <label>
+                    <div class="edit-acc-input-text" id="name">Введите имя</div>
+                    <input type="text" class="edit-acc-input" id="name-input" th:field="*{name}">
+                    <input type="hidden" data-th-name="${_csrf.parameterName}" data-th-value="${_csrf.token}">
+                </label>
+                <label>
+                    <div class="edit-acc-input-text" id="surname">Введите фамилию</div>
+                    <input type="text" class="edit-acc-input" id="lastName-input" th:field="*{surname}">
+                    <input type="hidden" data-th-name="${_csrf.parameterName}" data-th-value="${_csrf.token}">
+                </label>
+                <label>
+                    <div class="edit-acc-input-text" id="">Введите дату рождения</div>
+                    <input type="date" class="edit-acc-input" id="birth-input" th:field="*{birth}">
+                    <input type="hidden" data-th-name="${_csrf.parameterName}" data-th-value="${_csrf.token}">
+                </label>
+                <label>
+                    <div class="edit-acc-input-text">Профессию</div>
+                    <input type="text" class="edit-acc-input" id="specialization-input" th:field="*{specialization}">
+                    <input type="hidden" data-th-name="${_csrf.parameterName}" data-th-value="${_csrf.token}">
+                </label>
+                <label>
+                    <div class="edit-acc-input-text">E-mail</div>
+                    <input type="text" class="edit-acc-input" id="mail-input" th:field="*{email}">
+                    <input type="hidden" data-th-name="${_csrf.parameterName}" data-th-value="${_csrf.token}">
+                </label>
+                <label>
+                    <div class="edit-acc-input-text">Телефон</div>
+                    <input type="text" class="edit-acc-input" id="phone-input" th:field="*{phone}">
+                    <input type="hidden" data-th-name="${_csrf.parameterName}" data-th-value="${_csrf.token}">
+                </label>
+                <button type="submit" class="button"><span>Изменить</span></button>
+            </form>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,203 @@
+.menu ul {
+    display: flex;
+    width: 580px;
+    justify-content: space-between;
+}
+
+.menu ul li {
+    list-style: none;
+    text-align: center;
+    width: 100px;
+    display: flex;
+    align-items: center;
+}
+
+
+/*Медицинская карта!!!*/
+.medical-card {
+    margin-top: 25px;
+    margin-bottom: 35px;
+}
+
+.medical-card .container {
+    background-color: rgba(59, 188, 234, 0.1);
+    padding: 27px 55px 43px 55px;
+    width: 1200px;
+    box-sizing: border-box;
+}
+
+.medical-card-name {
+    font-weight: 700;
+    font-size: 24px;
+    color: #12354b;
+    margin-bottom: 30px;
+}
+
+.medical-card-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.medical-card-info {
+    display: flex;
+    align-items: start;
+    justify-content: space-between;
+    flex-direction: column;
+    height: 180px;
+}
+
+.medical-card-info .phone {
+    border-bottom: 0 solid transparent;
+    border-top: 0 solid transparent;
+}
+
+.medical-card.user-appointment .container {
+    padding: 27px 55px 43px 55px;
+    /*width: auto;*/
+    width: 1205px;
+    box-sizing: border-box;
+}
+
+.medical-card-actions .button {
+    width: 200px;
+    font-size: 18px;
+    align-items: center;
+    display: flex;
+    text-decoration: none;
+}
+
+.medical-card-img img {
+    height: 220px;
+}
+
+.appointment-text {
+    font-weight: 700;
+    font-size: 32px;
+    color: #12354b;
+    padding-bottom: 16px;
+    border-bottom: 1px solid black;
+}
+
+.appointment-details {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 35px;
+    padding-top: 35px;
+}
+
+.appointment-details-first {
+    display: flex;
+    align-items: center;
+}
+
+.appointment-details-second {
+    display: flex;
+    align-items: center;
+}
+
+.appointment-dot {
+    width: 50px;
+    height: 50px;
+    background-color: #ff9e9e;
+    border-radius: 50%;
+    margin-right: 35px;
+}
+
+.appointment-info-doctor {
+    margin-bottom: 5px;
+}
+
+.medical-card .button {
+    width: 200px;
+    margin-right: 40px;
+}
+
+.button-notification {
+    border: none;
+    background-color: transparent;
+}
+
+.button-notification svg {
+    width: 50px;
+    height: 50px;
+}
+
+.button-notification svg:hover path {
+    fill: #024094FF;
+    cursor: pointer;
+}
+
+
+
+
+
+/*-------------------------РЕДАКТИРОВАТЬ АККАУНТ У ДОКТОРА--------------------------*/
+.edit-account {
+    padding: 30px 40px 50px 40px;
+}
+
+.edit-account h1 {
+    font-weight: 600;
+    font-size: 32px;
+    color: #191b1c;
+    margin-bottom: 36px;
+}
+
+.edit-acc-form {
+    width: 452px;
+    display: flex;
+    flex-direction: column;
+}
+
+.card__image {
+    cursor: pointer;
+    margin-bottom: 20px;
+}
+
+.edit-acc-input-text {
+    font-size: 16px;
+    line-height: 169%;
+    color: #90979a;
+}
+
+.edit-acc-input {
+    margin-bottom: 20px;
+    border: 0;
+    background-color: transparent;
+    border-bottom: 1px solid #90979a;
+    width: 452px;
+    outline: none;
+    font-size: 20px;
+    line-height: 135%;
+    color: #323232;
+}
+
+.edit-acc-input:focus, .edit-acc-input:active {
+    border-bottom: 1px solid black;
+}
+
+.edit-acc-input.checkbox {
+    width: 16px;
+    height: 16px;
+    margin-right: 10px;
+    margin-bottom: 0;
+}
+
+.edit-acc-form .button {
+    width: 215px;
+    height: 50px;
+}
+
+
+.medical-card-adaptive {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.medical-card-adaptive .button {
+    margin-left: 120px;
+    margin-right: 0;
+}

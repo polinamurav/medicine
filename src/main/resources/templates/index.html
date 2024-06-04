@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Вита-центр</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style-user.css}">
+
+    <link rel="icon" type="image/png" th:href="@{/images/all/логотип.png/логотип.png}"/>
+
+
+    <link rel="stylesheet" type="text/css" th:href="@{/css/adaptive.css}">
+<!--    <link rel="stylesheet" type="text/css" th:href="@{/css/adapt.css}">-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+
+<!-- шапка HEADER-->
+
+<div th:if="${user != null and !user.isAdmin()}">
+    <div th:replace="blocks/header-user :: header"></div>
+</div>
+<div th:if="${user != null and user.isAdmin()}">
+    <div th:replace="blocks/header-user :: header"></div>
+</div>
+<div th:if="${user == null}">
+    <div th:replace="blocks/header :: header"></div>
+</div>
+
+<div class="main">
+    <div class="container">
+        <div class="main-title">Заботьтесь о себе с легкостью в “Вита-центре”</div>
+        <div class="main-description">
+            Наша онлайн-система записи позволяет вам легко и удобно записываться на прием в любое время и из любого
+            места. Просто, быстро
+            и эффективно – ваше здоровье в ваших руках!
+        </div>
+        <button class="button" onclick="window.location.href='/online-appointment'"><span>Записаться на приём</span></button>
+        <div class="advantages">
+            <div class="advantage">
+                <svg width="45" height="45" viewBox="0 0 45 45" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M22.6983 26.7584C15.2419 26.7584 9.17566 32.8246 9.17566 40.281C9.17566 40.6444 9.46983 40.9386 9.83327 40.9386H35.5633C35.9268 40.9386 36.2209 40.6444 36.2209 40.281C36.2209 32.8246 30.1547 26.7584 22.6983 26.7584ZM10.5084 39.6234C10.8512 33.1968 16.188 28.0736 22.6983 28.0736C29.2086 28.0736 34.5454 33.1968 34.8882 39.6234H10.5084Z"
+                          fill="#20A0CD"/>
+                    <path d="M22.4751 25.5558C26.7881 25.5558 30.2976 22.0455 30.2976 17.7302C30.2976 16.2059 29.8579 14.7355 29.0306 13.4663V3.76613C29.0306 3.40269 28.7364 3.10852 28.373 3.10852H16.5781C16.2147 3.10852 15.9205 3.40269 15.9205 3.76613V13.4619C15.091 14.7337 14.6513 16.2072 14.6513 17.7302C14.6509 22.0455 18.1607 25.5558 22.4751 25.5558ZM17.2353 4.42418H27.7149V13.1691H17.2353V4.42418ZM16.8363 14.4838H28.1161C28.6838 15.4681 28.9824 16.5812 28.9824 17.7302C28.9819 21.3204 26.063 24.2406 22.4751 24.2406C18.8863 24.2406 15.9665 21.3199 15.9665 17.7302C15.9665 16.5829 16.2673 15.4694 16.8363 14.4838Z"
+                          fill="#20A0CD"/>
+                    <path d="M24.7668 8.21154H23.1328V6.57497C23.1328 6.21153 22.8387 5.91736 22.4752 5.91736C22.1118 5.91736 21.8176 6.21153 21.8176 6.57497V8.21154H20.1832C19.8198 8.21154 19.5256 8.50571 19.5256 8.86915C19.5256 9.23259 19.8198 9.52676 20.1832 9.52676H21.8176V11.1611C21.8176 11.5246 22.1118 11.8187 22.4752 11.8187C22.8387 11.8187 23.1328 11.5246 23.1328 11.1611V9.52676H24.7668C25.1302 9.52676 25.4244 9.23259 25.4244 8.86915C25.4244 8.50571 25.1298 8.21154 24.7668 8.21154Z"
+                          fill="#20A0CD"/>
+                </svg>
+                <div class="advantage-text">Команда квалифицированных специалистов</div>
+            </div>
+            <div class="advantage">
+                <svg width="30" height="40" viewBox="0 0 30 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M29.2538 19.9656H24.8488L23.1435 12.8793C23.0754 12.5961 22.8221 12.3965 22.5309 12.3965H8.61713L6.37406 1.02365C6.30726 0.684611 5.97914 0.463624 5.6401 0.526223L1.43251 1.31228C1.09053 1.37614 0.86492 1.70552 0.928779 2.04751L5.21871 25.0235C5.26282 25.2609 5.43928 25.4524 5.67287 25.5159C5.72749 25.5306 5.78336 25.5381 5.8384 25.5381C5.9031 25.5381 5.9657 25.5251 6.02662 25.5058H18.094V34.4898H9.99515C9.64686 34.4898 9.36496 34.7721 9.36496 35.12V39.3083C9.36496 39.6561 9.64686 39.9385 9.99515 39.9385H27.4498C27.7977 39.9385 28.08 39.6561 28.08 39.3083V35.12C28.08 34.7721 27.7977 34.4898 27.4498 34.4898H19.3543V25.5054H29.2534C29.6013 25.5054 29.8836 25.223 29.8836 24.8752V20.5958C29.884 20.2475 29.6017 19.9656 29.2538 19.9656ZM26.8196 38.6781H10.6253V35.7502H26.8196V38.6781ZM22.0348 13.6569L23.5527 19.9656H10.1103L8.86584 13.6569H22.0348ZM2.28369 2.43529L5.2582 1.87988L8.91416 20.4147L6.21862 23.511L2.28369 2.43529ZM28.6236 24.245H7.25087L9.87919 21.2255H28.6236V24.245Z"
+                          fill="#20A0CD"/>
+                </svg>
+                <div class="advantage-text">Комплексное обследование</div>
+            </div>
+            <div class="advantage">
+                <svg width="26" height="43" viewBox="0 0 26 43" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M16.7948 30.9722L23.6819 19.8983C23.7062 19.8594 23.7267 19.819 23.7435 19.7769C24.9563 17.7949 25.5964 15.5329 25.5964 13.2249C25.5964 6.28921 19.9534 0.646729 13.0166 0.646729C6.08143 0.646729 0.439484 6.28921 0.439484 13.2249C0.439484 15.5356 1.0807 17.7982 2.29458 19.779C2.3097 19.8157 2.32751 19.8514 2.34856 19.8864L8.99118 31.0035C3.80587 31.7732 0.40332 33.9419 0.40332 36.5769C0.40332 39.9212 5.81911 42.4429 13.0004 42.4429C20.1817 42.4429 25.5969 39.9212 25.5969 36.5769C25.5964 33.8858 22.1113 31.7084 16.7948 30.9722ZM3.74164 19.0401C2.64056 17.2887 2.05872 15.2781 2.05872 13.2255C2.05872 7.18249 6.97416 2.2665 13.0166 2.2665C19.0606 2.2665 23.9772 7.18249 23.9772 13.2255C23.9772 15.277 23.3959 17.2876 22.2953 19.0407C22.2705 19.0801 22.2495 19.1211 22.2327 19.1637L14.876 30.9927C14.7319 31.1066 14.6288 31.268 14.5883 31.4558L12.8336 34.2771L3.81018 19.1761C3.79129 19.1292 3.76862 19.0833 3.74164 19.0401ZM12.9999 40.8231C6.53049 40.8231 2.02201 38.5853 2.02201 36.5764C2.02201 34.6047 5.94163 33.006 9.89472 32.5164L12.1239 36.2477C12.2685 36.49 12.5292 36.6395 12.8115 36.6417C12.8136 36.6417 12.8163 36.6417 12.8185 36.6417C13.0981 36.6417 13.3583 36.4971 13.5056 36.2596L15.8513 32.4878C20.946 33.0476 23.9766 34.969 23.9766 36.5759C23.9772 38.5853 19.4687 40.8231 12.9999 40.8231Z"
+                          fill="#20A0CD"/>
+                    <path d="M17.645 13.2257C17.645 10.6646 15.5616 8.58063 13 8.58063C10.4389 8.58063 8.35548 10.6646 8.35548 13.2257C8.35548 15.7867 10.4389 17.8707 13 17.8707C15.5616 17.8707 17.645 15.7867 17.645 13.2257ZM9.97418 13.2257C9.97418 11.5573 11.3316 10.1999 12.9994 10.1999C14.6683 10.1999 16.0252 11.5573 16.0252 13.2257C16.0252 14.894 14.6678 16.2515 12.9994 16.2515C11.3316 16.2515 9.97418 14.894 9.97418 13.2257Z"
+                          fill="#20A0CD"/>
+                </svg>
+                <div class="advantage-text">Удобное расположение</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="specialists" id="specialists">
+    <div class="container">
+        <div class="specialists-title">Специалисты</div>
+        <div class="specialists-description">
+            Просто и безболезненно, с предоставлением всего спектра услуг
+        </div>
+        <div class="doctors">
+            <div th:each="doctor : ${doctors}" class="doctor-item">
+                <div class="doctor-info">
+                    <div class="doctor-item-title" th:text="${doctor.name} + ' ' + ${doctor.surname}"></div>
+                    <div class="doctor-item-description" th:text="${doctor.specialization}"></div>
+                    <div class="doctor-item-description" th:text="'Дата рождения: ' + ${doctor.birth}"></div>
+<!--                    <div class="doctor-item-description" th:text="'Дата рождения: ' + ${#temporals.format(doctor.birth, 'dd.MM.yyyy')}"></div>-->
+                    <button class="button"
+                            th:attr="data-doctorId=${doctor.iddoctor}, data-serviceId=${doctor.services.get(0).idservice}"
+                            onclick="selectDoctor(this)">
+                        <span>Выбрать специалиста</span>
+                    </button>
+                </div>
+                <div class="doctor-image">
+<!--                    <img th:src="@{/images/specialist/1.png}" alt="Доктор">-->
+                    <img th:if="${doctor.images != null}" th:src="@{/doctor-images/{id}(id=${doctor.images.id})}" alt="Изображение доктора"/>
+                    <img th:if="${doctor.images == null}" th:src="@{/images/specialist/user.png}" alt="Пользователь"/>
+                </div>
+                <!--                <div class="doctor-image">-->
+                <!--                    <img th:src="@{/images/specialist/{doctor.image}(doctor=${doctor.image})}" alt="Доктор">-->
+                <!--                </div>-->
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- шапка FOOTER-->
+<div th:replace="blocks/footer :: footer"></div>
+
+<script th:inline="javascript">
+    function selectDoctor(button) {
+        var doctorId = button.getAttribute('data-doctorId');
+        var serviceId = button.getAttribute('data-serviceId');
+        var url = '/online-appointment?doctorId=' + doctorId + '&serviceId=' + serviceId;
+        window.location.href = url;
+    }
+
+    document.getElementById('burger').onclick = function () {
+        document.getElementById('menu').classList.add('open');
+    }
+
+    document.querySelectorAll('#menu *').forEach((item) => {
+        item.onclick = () => {
+            document.getElementById('menu').classList.remove('open')
+        }
+    })
+</script>
+</body>
+</html>

@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Главная</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/admin.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/adaptive.css}">
+
+    <link rel="icon" type="image/png" th:href="@{../images/логотип.png}"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="_csrf" content="${_csrf.token}"/>
+    <meta name="_csrf_header" content="${_csrf.headerName}"/>
+</head>
+<body>
+
+<div class="layout">
+    <!-- шапка боковая панель ДОКТОР -->
+    <div th:replace="blocks/sidebar-doctor :: sidebar"></div>
+
+    <div class="content">
+        <!-- шапка HEADER доктора и админа с их именем -->
+        <div th:replace="blocks/header-D-A-main :: header"></div>
+
+        <div class="doctor-main">
+            <h1>Профиль</h1>
+            <div class="doctor-main-preview">
+                <div class="bannar">
+                    <!--                    <img th:src="@{../images/specialist/bannar1.png}" alt="Баннер">-->
+                </div>
+                <div class="doctor-main-preview-actions">
+<!--                    <div class="doctor-photo">-->
+                        <!--                        <img th:src="@{../images/specialist/1.png}" alt="Фото доктора">-->
+<!--                    </div>-->
+                    <div class="doctor-photo">
+                        <img th:if="${doctor.images != null}" th:src="@{/doctor-images/{id}(id=${doctor.images.id})}" alt="Изображение доктора"/>
+                        <img th:if="${doctor.images == null}" th:src="@{../images/specialist/user.png}" alt="Пользователь"/>
+                    </div>
+                    <div class="doctor-info">
+                        <div class="doctor-name" th:text="${doctor.name} + ' ' + ${doctor.surname}"></div>
+                        <div class="doctor-status" th:text="${doctor.specialization}"></div>
+                    </div>
+                    <div class="doctor-edit">
+                        <a th:href="@{/doctor/edit-acc/{id}(id=${doctor.iddoctor})}" >Редактировать профиль</a>
+                    </div>
+                </div>
+            </div>
+            <div class="doctor-main-actions">
+                <div class="doctor-approve-appointment">
+                    <h2>Недавние записи</h2>
+                    <div class="doctor-approve-appointment-cards" th:each="appointment : ${appointmentList}">
+                        <div class="doctor-appointment-card completed"
+                             th:if="${appointment.status == appointment.status.COMPLETED}">
+                            <div class="doctor-appointment-card-text">Завершенная запись на прием</div>
+                            <div class="doctor-appointment-card-info">
+                                <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
+                                     xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M10 12.5C12.7614 12.5 15 10.2614 15 7.5C15 4.73858 12.7614 2.5 10 2.5C7.23858 2.5 5 4.73858 5 7.5C5 10.2614 7.23858 12.5 10 12.5Z"
+                                          stroke="#4A5154" stroke-width="1.25" stroke-miterlimit="10"/>
+                                    <path d="M2.4209 16.8743C3.1893 15.5442 4.29419 14.4398 5.62456 13.672C6.95493 12.9042 8.46393 12.5 9.99997 12.5C11.536 12.5 13.045 12.9043 14.3754 13.6721C15.7057 14.44 16.8106 15.5444 17.579 16.8744"
+                                          stroke="#4A5154" stroke-width="1.25" stroke-linecap="round"
+                                          stroke-linejoin="round"/>
+                                </svg>
+                                <p th:text="${appointment.patient.name} + ' ' + ${appointment.patient.surname}">Древов Эдуард</p>
+                            </div>
+                            <div class="doctor-appointment-card-info">
+                                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"
+                                     xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M8.62516 3.83325C8.62516 3.48807 8.34534 3.20825 8.00016 3.20825C7.65498 3.20825 7.37516 3.48807 7.37516 3.83325V7.99992C7.37516 8.21541 7.48617 8.41571 7.66891 8.52992L10.1689 10.0924C10.4616 10.2754 10.8472 10.1864 11.0302 9.89367C11.2131 9.60096 11.1241 9.21536 10.8314 9.03242L8.62516 7.65351V3.83325Z"
+                                          fill="#4A5154"/>
+                                    <path fill-rule="evenodd" clip-rule="evenodd"
+                                          d="M8.00016 0.708252C3.97309 0.708252 0.708496 3.97284 0.708496 7.99992C0.708496 12.027 3.97309 15.2916 8.00016 15.2916C12.0272 15.2916 15.2918 12.027 15.2918 7.99992C15.2918 3.97284 12.0272 0.708252 8.00016 0.708252ZM1.9585 7.99992C1.9585 4.6632 4.66344 1.95825 8.00016 1.95825C11.3369 1.95825 14.0418 4.6632 14.0418 7.99992C14.0418 11.3366 11.3369 14.0416 8.00016 14.0416C4.66344 14.0416 1.9585 11.3366 1.9585 7.99992Z"
+                                          fill="#4A5154"/>
+                                </svg>
+                                <p th:text="${#temporals.format(appointment.appointmentDate, 'dd.MM.yyyy HH:mm')}">
+                                    14 Nov, 2024, 9:30 to 11:00</p>
+                            </div>
+                            <div class="doctor-appointment-card-info"> Статус записи -
+<!--                                <span class="completed" th:if="${appointment.status == appointment.status.COMPLETED}"-->
+<!--                                      th:text="${ appointment.status}"></span>-->
+                                <span class="completed" th:if="${appointment.status == appointment.status.COMPLETED}">
+                                    ЗАВЕРШЕНА
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="doctor-appointment-card expectation"
+                             th:if="${appointment.status == appointment.status.EXPECTATION}">
+                            <div class="doctor-appointment-card-text">Ожидание на одобрение записи на прием</div>
+                            <div class="doctor-appointment-card-info">
+                                <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
+                                     xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M10 12.5C12.7614 12.5 15 10.2614 15 7.5C15 4.73858 12.7614 2.5 10 2.5C7.23858 2.5 5 4.73858 5 7.5C5 10.2614 7.23858 12.5 10 12.5Z"
+                                          stroke="#4A5154" stroke-width="1.25" stroke-miterlimit="10"/>
+                                    <path d="M2.4209 16.8743C3.1893 15.5442 4.29419 14.4398 5.62456 13.672C6.95493 12.9042 8.46393 12.5 9.99997 12.5C11.536 12.5 13.045 12.9043 14.3754 13.6721C15.7057 14.44 16.8106 15.5444 17.579 16.8744"
+                                          stroke="#4A5154" stroke-width="1.25" stroke-linecap="round"
+                                          stroke-linejoin="round"/>
+                                </svg>
+                                <p th:text="${appointment.patient.name} + ' ' + ${appointment.patient.surname}">Древов Эдуард</p>
+                            </div>
+                            <div class="doctor-appointment-card-info">
+                                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"
+                                     xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M8.62516 3.83325C8.62516 3.48807 8.34534 3.20825 8.00016 3.20825C7.65498 3.20825 7.37516 3.48807 7.37516 3.83325V7.99992C7.37516 8.21541 7.48617 8.41571 7.66891 8.52992L10.1689 10.0924C10.4616 10.2754 10.8472 10.1864 11.0302 9.89367C11.2131 9.60096 11.1241 9.21536 10.8314 9.03242L8.62516 7.65351V3.83325Z"
+                                          fill="#4A5154"/>
+                                    <path fill-rule="evenodd" clip-rule="evenodd"
+                                          d="M8.00016 0.708252C3.97309 0.708252 0.708496 3.97284 0.708496 7.99992C0.708496 12.027 3.97309 15.2916 8.00016 15.2916C12.0272 15.2916 15.2918 12.027 15.2918 7.99992C15.2918 3.97284 12.0272 0.708252 8.00016 0.708252ZM1.9585 7.99992C1.9585 4.6632 4.66344 1.95825 8.00016 1.95825C11.3369 1.95825 14.0418 4.6632 14.0418 7.99992C14.0418 11.3366 11.3369 14.0416 8.00016 14.0416C4.66344 14.0416 1.9585 11.3366 1.9585 7.99992Z"
+                                          fill="#4A5154"/>
+                                </svg>
+                                <p th:text="${#temporals.format(appointment.appointmentDate, 'dd.MM.yyyy HH:mm')}">
+                                    14 Nov, 2024, 9:30 to 11:00</p>
+                            </div>
+                            <!--                                <button class="button expectation"><span>Подтвердить запись</span></button>-->
+                            <form th:id="'approveForm-' + ${appointment.idappointment}"
+                                  th:action="@{/doctor/approve-appointment}" method="post">
+                                <input type="hidden" name="appointmentId" th:value="${appointment.idappointment}"/>
+                                <button class="button expectation" type="button"
+                                        onclick="approveAppointmentConfirmation(this)"><span>Подтвердить запись</span>
+                                </button>
+                            </form>
+                        </div>
+
+
+                        <div class="doctor-appointment-card approved"
+                             th:if="${appointment.status == appointment.status.APPROVED}">
+                            <div class="doctor-appointment-card-text">Одобренная запись на прием</div>
+                            <div class="doctor-appointment-card-info">
+                                <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
+                                     xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M10 12.5C12.7614 12.5 15 10.2614 15 7.5C15 4.73858 12.7614 2.5 10 2.5C7.23858 2.5 5 4.73858 5 7.5C5 10.2614 7.23858 12.5 10 12.5Z"
+                                          stroke="#4A5154" stroke-width="1.25" stroke-miterlimit="10"/>
+                                    <path d="M2.4209 16.8743C3.1893 15.5442 4.29419 14.4398 5.62456 13.672C6.95493 12.9042 8.46393 12.5 9.99997 12.5C11.536 12.5 13.045 12.9043 14.3754 13.6721C15.7057 14.44 16.8106 15.5444 17.579 16.8744"
+                                          stroke="#4A5154" stroke-width="1.25" stroke-linecap="round"
+                                          stroke-linejoin="round"/>
+                                </svg>
+                                <p th:text="${appointment.patient.name} + ' ' + ${appointment.patient.surname}">Древов Эдуард</p>
+                            </div>
+                            <div class="doctor-appointment-card-info">
+                                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"
+                                     xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M8.62516 3.83325C8.62516 3.48807 8.34534 3.20825 8.00016 3.20825C7.65498 3.20825 7.37516 3.48807 7.37516 3.83325V7.99992C7.37516 8.21541 7.48617 8.41571 7.66891 8.52992L10.1689 10.0924C10.4616 10.2754 10.8472 10.1864 11.0302 9.89367C11.2131 9.60096 11.1241 9.21536 10.8314 9.03242L8.62516 7.65351V3.83325Z"
+                                          fill="#4A5154"/>
+                                    <path fill-rule="evenodd" clip-rule="evenodd"
+                                          d="M8.00016 0.708252C3.97309 0.708252 0.708496 3.97284 0.708496 7.99992C0.708496 12.027 3.97309 15.2916 8.00016 15.2916C12.0272 15.2916 15.2918 12.027 15.2918 7.99992C15.2918 3.97284 12.0272 0.708252 8.00016 0.708252ZM1.9585 7.99992C1.9585 4.6632 4.66344 1.95825 8.00016 1.95825C11.3369 1.95825 14.0418 4.6632 14.0418 7.99992C14.0418 11.3366 11.3369 14.0416 8.00016 14.0416C4.66344 14.0416 1.9585 11.3366 1.9585 7.99992Z"
+                                          fill="#4A5154"/>
+                                </svg>
+                                <p th:text="${#temporals.format(appointment.appointmentDate, 'dd.MM.yyyy HH:mm')}">
+                                    14 Nov, 2024, 9:30 to 11:00</p>
+                            </div>
+                            <form th:id="'cancelForm-' + ${appointment.idappointment}"
+                                  th:action="@{/doctor/cancel-appointment}" method="post">
+                                <input type="hidden" name="appointmentId" th:value="${appointment.idappointment}"/>
+                                <button class="button approved" type="button"
+                                        onclick="cancelAppointmentConfirmation(this)"><span>Отменить запись</span>
+                                </button>
+                            </form>
+                        </div>
+
+                        <div class="doctor-appointment-card canceled"
+                             th:if="${appointment.status == appointment.status.CANCELED}">
+                            <div class="doctor-appointment-card-text">Отмененная запись на прием</div>
+                            <div class="doctor-appointment-card-info">
+                                <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
+                                     xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M10 12.5C12.7614 12.5 15 10.2614 15 7.5C15 4.73858 12.7614 2.5 10 2.5C7.23858 2.5 5 4.73858 5 7.5C5 10.2614 7.23858 12.5 10 12.5Z"
+                                          stroke="#4A5154" stroke-width="1.25" stroke-miterlimit="10"/>
+                                    <path d="M2.4209 16.8743C3.1893 15.5442 4.29419 14.4398 5.62456 13.672C6.95493 12.9042 8.46393 12.5 9.99997 12.5C11.536 12.5 13.045 12.9043 14.3754 13.6721C15.7057 14.44 16.8106 15.5444 17.579 16.8744"
+                                          stroke="#4A5154" stroke-width="1.25" stroke-linecap="round"
+                                          stroke-linejoin="round"/>
+                                </svg>
+                                <p th:text="${appointment.patient.name} + ' ' + ${appointment.patient.surname}">Древов Эдуард</p>
+                            </div>
+                            <div class="doctor-appointment-card-info">
+                                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"
+                                     xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M8.62516 3.83325C8.62516 3.48807 8.34534 3.20825 8.00016 3.20825C7.65498 3.20825 7.37516 3.48807 7.37516 3.83325V7.99992C7.37516 8.21541 7.48617 8.41571 7.66891 8.52992L10.1689 10.0924C10.4616 10.2754 10.8472 10.1864 11.0302 9.89367C11.2131 9.60096 11.1241 9.21536 10.8314 9.03242L8.62516 7.65351V3.83325Z"
+                                          fill="#4A5154"/>
+                                    <path fill-rule="evenodd" clip-rule="evenodd"
+                                          d="M8.00016 0.708252C3.97309 0.708252 0.708496 3.97284 0.708496 7.99992C0.708496 12.027 3.97309 15.2916 8.00016 15.2916C12.0272 15.2916 15.2918 12.027 15.2918 7.99992C15.2918 3.97284 12.0272 0.708252 8.00016 0.708252ZM1.9585 7.99992C1.9585 4.6632 4.66344 1.95825 8.00016 1.95825C11.3369 1.95825 14.0418 4.6632 14.0418 7.99992C14.0418 11.3366 11.3369 14.0416 8.00016 14.0416C4.66344 14.0416 1.9585 11.3366 1.9585 7.99992Z"
+                                          fill="#4A5154"/>
+                                </svg>
+                                <p th:text="${#temporals.format(appointment.appointmentDate, 'dd.MM.yyyy HH:mm')}">
+                                    14 Nov, 2024, 9:30 to 11:00</p>
+                            </div>
+                            <div class="doctor-appointment-card-info"> Статус записи -
+                                <span class="canceled" th:if="${appointment.status == appointment.status.CANCELED}">
+<!--                                      th:text="${ appointment.status}"> ОТМЕНЕНА</span>-->
+                                    ОТМЕНЕНА
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="doctor-approve-appointment">
+                    <h2>Биография</h2>
+                    <div class="doctor-biography-main">
+                        <div class="doctor-biography">
+                            <div class="doctor-biography-title">ФИО:</div>
+                            <div class="doctor-biography-description"
+                                 th:text="${doctor.name} + ' ' + ${doctor.surname}"></div>
+                        </div>
+                        <div class="doctor-biography">
+                            <div class="doctor-biography-title">Профессия:</div>
+                            <div class="doctor-biography-description" th:text="${doctor.specialization}">Директор,
+                                главный врач
+                            </div>
+                        </div>
+                        <div class="doctor-biography">
+                            <div class="doctor-biography-title">Дата рождения:</div>
+                            <div class="doctor-biography-description" th:text="${doctor.birth}">25 Ноября, 1983</div>
+                        </div>
+                        <div class="contacts-text">Связаться:</div>
+                        <div class="contact">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                 xmlns="http://www.w3.org/2000/svg">
+                                <path opacity="0.2" d="M21.0005 5.25L12.0005 13.5L3.00049 5.25H21.0005Z"
+                                      fill="#005CE8"/>
+                                <path d="M21 5.25L12 13.5L3 5.25" stroke="#005CE8" stroke-width="1.25"
+                                      stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M3 5.25H21V18C21 18.1989 20.921 18.3897 20.7803 18.5303C20.6397 18.671 20.4489 18.75 20.25 18.75H3.75C3.55109 18.75 3.36032 18.671 3.21967 18.5303C3.07902 18.3897 3 18.1989 3 18V5.25Z"
+                                      stroke="#005CE8" stroke-width="1.25" stroke-linecap="round"
+                                      stroke-linejoin="round"/>
+                                <path d="M10.3633 12L3.23096 18.538" stroke="#005CE8" stroke-width="1.25"
+                                      stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M20.7687 18.5381L13.6362 12" stroke="#005CE8" stroke-width="1.25"
+                                      stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            <div class="contact-details">
+                                <div class="contact-details-title">EMAIL</div>
+                                <div class="contact-details-description" th:text="${doctor.email}">info@daria.com</div>
+                            </div>
+                        </div>
+                        <div class="contact">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                 xmlns="http://www.w3.org/2000/svg">
+                                <path opacity="0.2"
+                                      d="M8.66965 11.7014C9.44762 13.2919 10.7369 14.5753 12.3309 15.346C12.4475 15.4013 12.5765 15.4252 12.7052 15.4155C12.8339 15.4058 12.9579 15.3627 13.0648 15.2905L15.4119 13.7254C15.5157 13.6562 15.6352 13.6139 15.7594 13.6025C15.8837 13.5911 16.0088 13.6109 16.1235 13.66L20.5144 15.5419C20.6636 15.6052 20.7881 15.7154 20.8693 15.8556C20.9504 15.9959 20.9838 16.1588 20.9643 16.3197C20.8255 17.4057 20.2956 18.4039 19.4739 19.1273C18.6521 19.8508 17.5948 20.2499 16.5 20.25C13.1185 20.25 9.87548 18.9067 7.48439 16.5156C5.0933 14.1245 3.75 10.8815 3.75 7.49997C3.75006 6.40513 4.14918 5.34786 4.87264 4.5261C5.5961 3.70435 6.59428 3.17448 7.68028 3.03569C7.84117 3.01622 8.00403 3.04956 8.14432 3.1307C8.28461 3.21183 8.39473 3.33636 8.4581 3.48552L10.3416 7.88032C10.3903 7.994 10.4101 8.11796 10.3994 8.24116C10.3886 8.36437 10.3475 8.48299 10.2798 8.58647L8.72011 10.9696C8.64912 11.0768 8.60716 11.2006 8.59831 11.3288C8.58947 11.4571 8.61405 11.5855 8.66965 11.7014V11.7014Z"
+                                      fill="#005CE8"/>
+                                <path d="M8.66965 11.7014C9.44762 13.2919 10.7369 14.5753 12.3309 15.346C12.4475 15.4013 12.5765 15.4252 12.7052 15.4155C12.8339 15.4058 12.9579 15.3627 13.0648 15.2905L15.4119 13.7254C15.5157 13.6562 15.6352 13.6139 15.7594 13.6025C15.8837 13.5911 16.0088 13.6109 16.1235 13.66L20.5144 15.5419C20.6636 15.6052 20.7881 15.7154 20.8693 15.8556C20.9504 15.9959 20.9838 16.1588 20.9643 16.3197C20.8255 17.4057 20.2956 18.4039 19.4739 19.1273C18.6521 19.8508 17.5948 20.2499 16.5 20.25C13.1185 20.25 9.87548 18.9067 7.48439 16.5156C5.0933 14.1245 3.75 10.8815 3.75 7.49997C3.75006 6.40513 4.14918 5.34786 4.87264 4.5261C5.5961 3.70435 6.59428 3.17448 7.68028 3.03569C7.84117 3.01622 8.00403 3.04956 8.14432 3.1307C8.28461 3.21183 8.39473 3.33636 8.4581 3.48552L10.3416 7.88032C10.3903 7.994 10.4101 8.11796 10.3994 8.24116C10.3886 8.36437 10.3475 8.48299 10.2798 8.58647L8.72011 10.9696C8.64912 11.0768 8.60716 11.2006 8.59831 11.3288C8.58947 11.4571 8.61405 11.5855 8.66965 11.7014V11.7014Z"
+                                      stroke="#005CE8" stroke-width="1.25" stroke-linecap="round"
+                                      stroke-linejoin="round"/>
+                                <path d="M14.9453 3.75C16.2167 4.09194 17.376 4.76196 18.307 5.69294C19.238 6.62392 19.908 7.78319 20.2499 9.05462"
+                                      stroke="#005CE8" stroke-width="1.25" stroke-linecap="round"
+                                      stroke-linejoin="round"/>
+                                <path d="M14.1689 6.64844C14.9318 6.8536 15.6274 7.25561 16.186 7.8142C16.7445 8.37279 17.1466 9.06835 17.3517 9.83121"
+                                      stroke="#005CE8" stroke-width="1.25" stroke-linecap="round"
+                                      stroke-linejoin="round"/>
+                            </svg>
+                            <div class="contact-details">
+                                <div class="contact-details-title">PHONE</div>
+                                <div class="contact-details-description" th:text="${doctor.phone}">+1-202-555-0151</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script th:inline="javascript">
+    function cancelAppointmentConfirmation(button) {
+        let result = confirm("Вы уверены, что хотите отменить запись?");
+        if (result) {
+            // Если пользователь подтвердил отмену, отправляем форму
+            let form = button.closest("form");
+            form.submit();
+        }
+    }
+
+    function approveAppointmentConfirmation(button) {
+        let result = confirm("Вы уверены, что хотите подтвердить запись?");
+        if (result) {
+            // Если пользователь подтвердил отмену, отправляем форму
+            let form = button.closest("form");
+            form.submit();
+        }
+    }
+</script>
+</body>
+</html>

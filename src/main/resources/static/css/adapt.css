@@ -1,0 +1,191 @@
+@media screen and (max-width: 1229px) {
+    .container {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
+    .main-content-image img {
+        width: 100%;
+    }
+
+    .main {
+        overflow: hidden;
+    }
+}
+
+@media screen and (max-width: 1024px) {
+    .menu {
+        display: none;
+    }
+
+    .menu {
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        top: 0;
+        left: 0;
+        background: rgba(0, 0, 0, 0.73);
+        z-index: 100;
+    }
+
+    .menu ul {
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .menu ul li a {
+        color: white;
+        font-size: 23px;
+    }
+
+    .menu ul li {
+        margin: 25px 0;
+    }
+
+    .burger {
+        display: block;
+        width: 36px;
+    }
+
+    .burger svg {
+        fill: rgb(119, 11, 29);
+    }
+
+    .menu.open {
+        display: flex;
+        align-items: center;
+    }
+
+    .menu .close {
+        display: block;
+        width: 24px;
+        height: 24px;
+        fill: white;
+        position: absolute;
+        top: 45px;
+        left: 20px;
+    }
+
+    .footer {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 820px) {
+    .main {
+        background-position-x: center;
+        background-attachment: local;
+    }
+
+    .main-title {
+        font-size: 36px;
+    }
+
+    .main-description {
+        font-size: 18px;
+    }
+
+    .button {
+        width: 250px;
+        height: 50px;
+    }
+
+    .doctors {
+        display: grid;
+        /*grid-template-columns: repeat(1, minmax(367px, 580px));*/
+        grid-template-columns: repeat(1, minmax(367px, 580px));
+        grid-row-gap: 70px;
+        grid-column-gap: 40px;
+        align-items: center;
+        justify-content: center;
+        justify-items: center;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .address {
+        display: none;
+    }
+
+    .footer {
+        display: block;
+    }
+
+    .footer .address {
+        display: flex;
+    }
+
+    .footer .phone {
+        display: none;
+    }
+
+    .rights {
+        display: none;
+    }
+
+    .doctor-info .button {
+        width: 170px;
+        padding: 10px 8px;
+        font-size: 16px;
+    }
+}
+
+@media screen and (max-width: 425px) {
+    .header .phone {
+        display: none;
+    }
+
+    .networks {
+        display: none;
+    }
+
+    .footer .logo {
+        display: none;
+    }
+
+    .footer .phone {
+        display: flex;
+    }
+
+
+}
+
+@media screen and (max-width: 320px) {
+    .main {
+        padding: 90px 0 134px;
+    }
+
+    .specialists {
+        padding: 80px 0 107px;
+    }
+
+    .specialists-title {
+        font-size: 36px;
+    }
+
+    .specialists-description {
+        font-size: 20px;
+    }
+
+    .doctors {
+        grid-template-columns: 300px;
+    }
+
+    .doctor-item-title {
+        font-size: 22px;
+    }
+
+    .doctor-item-description {
+        font-size: 16px;
+    }
+
+    .doctor-info .button {
+        width: 130px;
+        padding: 10px 8px;
+        font-size: 16px;
+    }
+}

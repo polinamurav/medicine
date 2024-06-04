@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Календарь</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/admin.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/adaptive.css}">
+
+    <link rel="icon" type="image/png" th:href="@{../images/логотип.png}"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="_csrf" content="${_csrf.token}"/>
+    <meta name="_csrf_header" content="${_csrf.headerName}"/>
+</head>
+<body>
+
+<div class="layout">
+    <!-- шапка боковая панель ДОКТОР -->
+    <div th:replace="blocks/sidebar-doctor :: sidebar"></div>
+
+    <div class="content">
+        <!-- шапка HEADER доктора и админа с их именем -->
+        <div th:replace="blocks/header-D-A-main :: header"></div>
+
+        <div class="main-admin">
+            <h1>Календарь записей</h1>
+            <div class="calendar">
+                <div class="calendar-actions">
+                    <div class="calendar-date">Июнь, 2024</div>
+                </div>
+                <table class="calendar-table">
+                    <thead align="center">
+                    <tr>
+                        <td>Понедельник</td>
+                        <td>Вторник</td>
+                        <td>Среда</td>
+                        <td>Четверг</td>
+                        <td>Пятница</td>
+                        <td>Суббота</td>
+                        <td>Воскресенье</td>
+                    </tr>
+                    </thead>
+                    <tbody align="center">
+                    <tr th:each="week : ${calendar.weeks}">
+                        <td th:each="day : ${week.days}">
+                            <span th:if="${day.date != null}" th:text="${formattedDates.get(day.date)}"></span>
+                            <span th:if="${day.date == null}">&nbsp;</span>
+                            <div class="calendar-cell" th:if="${day.date != null && appointmentsByDay.containsKey(day.date)}">
+                                <div th:each="appointment : ${appointmentsByDay.get(day.date)}">
+                                        <div class="calendar-doctor-appointment" th:if="${appointment.status == appointment.status.APPROVED}">
+                                        <span th:text="${appointment.patient.name} + ' ' + ${appointment.patient.surname}"></span>
+                                        <div class="popup-calendar-info">
+                                            <!--                                            <div class="doctor-appointment-card-text" th:text="${appointment.type}">Запись на консультацию</div>-->
+                                            <div class="doctor-appointment-card-info">
+                                                <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
+                                                     xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M10 12.5C12.7614 12.5 15 10.2614 15 7.5C15 4.73858 12.7614 2.5 10 2.5C7.23858 2.5 5 4.73858 5 7.5C5 10.2614 7.23858 12.5 10 12.5Z"
+                                                          stroke="#4A5154" stroke-width="1.25"
+                                                          stroke-miterlimit="10"/>
+                                                    <path d="M2.4209 16.8743C3.1893 15.5442 4.29419 14.4398 5.62456 13.672C6.95493 12.9042 8.46393 12.5 9.99997 12.5C11.536 12.5 13.045 12.9043 14.3754 13.6721C15.7057 14.44 16.8106 15.5444 17.579 16.8744"
+                                                          stroke="#4A5154" stroke-width="1.25"
+                                                          stroke-linecap="round"
+                                                          stroke-linejoin="round"/>
+                                                </svg>
+                                                <p th:text="${appointment.patient.name} + ' ' + ${appointment.patient.surname}">
+                                                    Древов Эдуард</p>
+                                            </div>
+                                            <div class="doctor-appointment-card-info">
+                                                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"
+                                                     xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M8.62516 3.83325C8.62516 3.48807 8.34534 3.20825 8.00016 3.20825C7.65498 3.20825 7.37516 3.48807 7.37516 3.83325V7.99992C7.37516 8.21541 7.48617 8.41571 7.66891 8.52992L10.1689 10.0924C10.4616 10.2754 10.8472 10.1864 11.0302 9.89367C11.2131 9.60096 11.1241 9.21536 10.8314 9.03242L8.62516 7.65351V3.83325Z"
+                                                          fill="#4A5154"/>
+                                                    <path fill-rule="evenodd" clip-rule="evenodd"
+                                                          d="M8.00016 0.708252C3.97309 0.708252 0.708496 3.97284 0.708496 7.99992C0.708496 12.027 3.97309 15.2916 8.00016 15.2916C12.0272 15.2916 15.2918 12.027 15.2918 7.99992C15.2918 3.97284 12.0272 0.708252 8.00016 0.708252ZM1.9585 7.99992C1.9585 4.6632 4.66344 1.95825 8.00016 1.95825C11.3369 1.95825 14.0418 4.6632 14.0418 7.99992C14.0418 11.3366 11.3369 14.0416 8.00016 14.0416C4.66344 14.0416 1.9585 11.3366 1.9585 7.99992Z"
+                                                          fill="#4A5154"/>
+                                                </svg>
+                                                <p th:text="${appointment.appointmentDate.toLocalTime()}">10:00</p>
+                                            </div>
+                                            <div class="doctor-appointment-card-info">
+                                                <p th:if="${appointment.status == appointment.status.COMPLETED}">Статус записи: ЗАВЕРШЕНО</p>
+                                                <p th:if="${appointment.status == appointment.status.EXPECTATION}">Статус записи: В ОЖИДАНИИ ПОДТВЕРЖДЕНИЯ</p>
+                                                <p th:if="${appointment.status == appointment.status.APPROVED}">Статус записи: ПОДТВЕРЖДЕНА</p>
+                                                <p th:if="${appointment.status == appointment.status.CANCELED}">Статус записи: ОТМЕНЕНА</p>
+                                            </div>
+                                            <div class="doctor-appointment-card-buttons">
+                                                <a class="doctor-appointment-card-button button-blue"
+                                                   th:href="@{/doctor/medical-card(id=${appointment.patient.iduser})}">К
+                                                    пациенту</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-KyZXEAg3QhqLMpG8r+Knujsl5+5hb7xkFo6HtKZ7C7I="
+        crossorigin="anonymous"></script>
+<!--<script th:src="@{/js/admin.js}"></script>-->
+
+</body>
+</html>

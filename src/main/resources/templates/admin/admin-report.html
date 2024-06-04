@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Отчеты</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/admin.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/adaptive.css}">
+
+    <link rel="icon" type="image/png" th:href="@{../images/логотип.png}"/>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.4/jspdf.debug.js"></script>
+
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="_csrf" content="${_csrf.token}"/>
+    <meta name="_csrf_header" content="${_csrf.headerName}"/>
+    <style>
+        #appointmentChart {
+            margin: 0 auto;
+            width: 300px;
+            height: 350px;
+        }
+        #serviceChart {
+            margin: 0 auto;
+            width: 300px;
+            height: 350px;
+        }
+        #timeChart {
+            margin: 0 auto;
+            width: 300px;
+            height: 350px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="layout">
+    <!-- шапка боковая панель АДМИН -->
+    <div th:replace="blocks/sidebar-admin :: sidebar"></div>
+
+    <div class="content">
+        <header class="header">
+            <div class="header-name">
+                Добро пожаловать: Администратор
+            </div>
+            <div class="header-actions">
+                <a class="button" href="/login"><span>Выйти</span></a>
+            </div>
+        </header>
+
+        <div class="appointment-statistics">
+            <h1>Аналитика</h1>
+            <div class="save-statistics">
+                <div class="save-statistics-svg">
+                    <svg width="40" height="40" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M2.5 16.25V5C2.5 4.83424 2.56585 4.67527 2.68306 4.55806C2.80027 4.44085 2.95924 4.375 3.125 4.375H7.29167C7.4269 4.375 7.55848 4.41886 7.66667 4.5L9.83333 6.125C9.94152 6.20614 10.0731 6.25 10.2083 6.25H15.625C15.7908 6.25 15.9497 6.31585 16.0669 6.43306C16.1842 6.55027 16.25 6.70924 16.25 6.875V8.75"
+                              stroke="#626C70" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M2.5 16.25L4.84285 10.3929C4.88924 10.2769 4.96932 10.1775 5.07275 10.1075C5.17619 10.0374 5.29823 10 5.42315 10H9.18576C9.30916 10 9.42979 9.96348 9.53245 9.89503L11.0925 8.85497C11.1952 8.78652 11.3158 8.75 11.4392 8.75H17.8829C17.9819 8.75 18.0795 8.77353 18.1677 8.81866C18.2558 8.86379 18.332 8.92922 18.3899 9.00956C18.4478 9.0899 18.4858 9.18284 18.5007 9.28074C18.5156 9.37864 18.5071 9.47869 18.4758 9.57264L16.25 16.25H2.5Z"
+                              stroke="#626C70" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                <div class="save-statistics-text">
+                    <span>Сохранить отчет</span>
+                    <div>
+                        <button class="button-savePdf" onclick="saveAsPDF()">Сохранить в PDF</button>
+                    </div>
+                </div>
+            </div>
+            <div class="statistics">
+                <div class="statistics-item">
+                    <h2>Cтатистика по статусам записей</h2>
+                    <canvas id="appointmentChart" width="200" height="200"></canvas>
+                </div>
+                <div class="statistics-item">
+                    <h2>Статистика популярности услуг</h2>
+                    <canvas id="serviceChart" width="200" height="200"></canvas>
+                </div>
+                <div class="statistics-item">
+                    <h2>Статистика количества записей по часам</h2>
+                    <canvas id="timeChart" width="200" height="200"></canvas>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    var statistics = /*[[${statistics}]]*/ [];
+    var serviceStatistics = /*[[${serviceStatistics}]]*/ [];
+    var timeStatistics = /*[[${timeStatistics}]]*/ [];
+
+    var statusLabels = [];
+    var statusData = [];
+
+    for (var i = 0; i < statistics.length; i++) {
+        statusLabels.push(statistics[i][0]);
+        statusData.push(statistics[i][1]);
+    }
+
+    var serviceLabels = [];
+    var serviceData = [];
+
+    for (var i = 0; i < serviceStatistics.length; i++) {
+        serviceLabels.push(serviceStatistics[i][0]);
+        serviceData.push(serviceStatistics[i][1]);
+    }
+
+    var timeLabels = [];
+    var timeData = [];
+
+    for (var i = 0; i < timeStatistics.length; i++) {
+        timeLabels.push(timeStatistics[i][0] + ":00");
+        timeData.push(timeStatistics[i][1]);
+    }
+
+    var ctx = document.getElementById('appointmentChart').getContext('2d');
+    var appointmentChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: statusLabels,
+            datasets: [{
+                label: 'Статусы заявок',
+                data: statusData,
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+
+    var ctxService = document.getElementById('serviceChart').getContext('2d');
+    var serviceChart = new Chart(ctxService, {
+        type: 'pie',
+        data: {
+            labels: serviceLabels,
+            datasets: [{
+                label: 'Популярность услуг',
+                data: serviceData,
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    display: true,
+                    position: 'bottom',
+                    labels: {
+                        font: {
+                            size: 12
+                        },
+                        generateLabels: function(chart) {
+                            var data = chart.data;
+                            if (data.labels.length && data.datasets.length) {
+                                return data.labels.map(function(label, i) {
+                                    var value = data.datasets[0].data[i];
+                                    return {
+                                        text: label + ' (' + value + ')',
+                                        fillStyle: data.datasets[0].backgroundColor[i],
+                                    };
+                                });
+                            }
+                            return [];
+                        }
+                    }
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            var label = context.label || '';
+                            if (label) {
+                                label += ': ';
+                            }
+                            if (context.raw !== null) {
+                                label += context.raw;
+                            }
+                            return label;
+                        }
+                    }
+                }
+            }
+        }
+    });
+
+
+    var ctxTime = document.getElementById('timeChart').getContext('2d');
+    var timeChart = new Chart(ctxTime, {
+        type: 'line',
+        data: {
+            labels: timeLabels,
+            datasets: [{
+                label: 'Количество записей по времени',
+                data: timeData,
+                backgroundColor: 'rgba(153, 102, 255, 0.2)',
+                borderColor: 'rgba(153, 102, 255, 1)',
+                borderWidth: 1,
+                fill: true
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                x: {
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'Время суток'
+                    }
+                },
+                y: {
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'Количество записей'
+                    }
+                }
+            }
+        }
+    });
+
+    function saveAsPDF() {
+        var pdf = new jsPDF('p', 'mm', 'a4');
+        pdf.setFontSize(18);
+        pdf.setFont("helvetica");
+        // Текст по центру
+        var text = "Report";
+        var textWidth = pdf.getStringUnitWidth(text) * pdf.internal.getFontSize() / pdf.internal.scaleFactor;
+        var pageWidth = pdf.internal.pageSize.width;
+        var textOffset = (pageWidth - textWidth) / 2;
+
+        pdf.text(text, textOffset, 10);
+
+
+        // Capture the first chart
+        html2canvas(document.getElementById('appointmentChart'), {scale: 4}).then(function(canvas) {
+            var imgData = canvas.toDataURL('image/png');
+            pdf.addImage(imgData, 'PNG', 10, 20, 120, 120);  // Scale size to fit within A4
+
+            // Capture the second chart
+            html2canvas(document.getElementById('serviceChart'), {scale: 4}).then(function(canvas2) {
+                var imgData2 = canvas2.toDataURL('image/png');
+                pdf.addPage();
+                pdf.addImage(imgData2, 'PNG', 10, 20, 120, 120);  // Scale size to fit within A4
+
+                // Capture the third chart
+                html2canvas(document.getElementById('timeChart'), {scale: 4}).then(function(canvas3) {
+                    var imgData3 = canvas3.toDataURL('image/png');
+                    pdf.addPage();
+                    pdf.addImage(imgData3, 'PNG', 10, 20, 120, 120);  // Scale size to fit within A4
+
+                    // Save the PDF
+                    pdf.save('reports.pdf');
+                });
+            });
+        });
+    }
+    /*]]>*/
+</script>
+</body>
+</html>

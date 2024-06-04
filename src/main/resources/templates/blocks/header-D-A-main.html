@@ -1,0 +1,10 @@
+<!-- шапка HEADER доктора и админа с их именем -->
+<div th:fragment="header" xmlns:th="http://www.w3.org/1999/xhtml">
+    <header class="header">
+        <div class="header-name" th:text="${doctor.name} + ', добро пожаловать!'">
+        </div>
+        <div class="header-actions">
+            <a class="button" href="/login"><span>Выйти</span></a>
+        </div>
+    </header>
+</div>

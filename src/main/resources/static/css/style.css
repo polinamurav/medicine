@@ -1,0 +1,617 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+}
+
+.header {
+    padding: 0 0;
+    background-color: white;
+    position: sticky;
+    top: 0;
+    z-index: 2;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    transition: all .3s;
+}
+
+.logo:hover {
+    transform: scale(1.2);
+}
+
+.menu ul {
+    display: flex;
+    width: 400px;
+    justify-content: space-between;
+}
+
+.menu ul li {
+    list-style: none;
+}
+
+.menu ul li a {
+    font-size: 15px;
+    color: #000000;
+    text-decoration: none;
+    border-bottom: 3px solid transparent;
+    transition: all .3s;
+}
+
+.menu ul li a:hover {
+    color: #01678a;
+    border-bottom: 3px solid #01678a;
+}
+
+.address {
+    display: flex;
+    align-items: center;
+}
+
+.address-text {
+    margin-left: 7px;
+    width: 134px;
+}
+
+.phone {
+    display: flex;
+    align-items: center;
+    border-bottom: 3px solid transparent;
+    border-top: 3px solid transparent;
+    transition: all .3s;
+}
+
+.phone-text {
+    margin-left: 7px;
+}
+
+.phone:hover, .phone:hover path {
+    color: #01678a;
+    border-bottom: 3px solid #01678a;
+    cursor: pointer;
+    fill: #01678a;
+}
+.account path {
+    transition: all .3s;
+}
+
+.account:hover path {
+    stroke: #12354b;
+    cursor: pointer;
+}
+
+.header .button {
+    text-decoration: none;
+    font-size: 15px;
+    width: 136px;
+    height: 53px;
+    background-color: transparent;
+    border: 4px dotted #42bbff;
+    color: black;
+}
+
+
+.header .button:hover {
+    background: transparent;
+    border: 4px dotted #024094FF;
+}
+
+.header .button::after {
+    background: none;
+}
+
+.main {
+    background-image: url("../images/all/main-image-opacity.png");
+    background-repeat: no-repeat;
+    background-size: cover; /*в какой-то момент сделать contain*/
+    padding: 166px 0 134px;
+    /*position: relative;*/
+}
+
+.main .container {
+    position: relative;
+}
+
+.main-title {
+    font-weight: 700;
+    font-size: 48px;
+    line-height: 104%;
+    color: #1a3444;
+    max-width: 661px;
+    margin-bottom: 33px;
+}
+
+.main-description {
+    font-weight: 400;
+    font-size: 20px;
+    color: #6f6f6f;
+    margin-bottom: 34px;
+    max-width: 465px;
+}
+
+.button {
+    width: 295px;
+    height: 60px;
+    box-sizing: border-box;
+    font-size: 20px;
+    text-align: center;
+    color: white;
+    padding: 15px 8px;
+    border: 0;
+    box-shadow: 0 1px 9px 0 rgba(0, 0, 0, 0.2);
+    background: #42bbff;
+    border-radius: 5px;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.button::after {
+    content: '';
+    width: 100%;
+    height: 100%;
+    background: #024094FF;
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-radius: 5px;
+    transform: translate(0, 100%);
+    transition: all .3s;
+}
+
+.button:hover::after {
+    transform: translate(0, 0);
+}
+
+.button > span {
+    z-index: 2;
+    position: relative;
+}
+
+.button > svg {
+    z-index: 3;
+    position: relative;
+}
+
+.advantages {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    align-items: center;
+    justify-items: center;
+    position: absolute;
+    bottom: -220px;
+    width: 100%;
+    left: calc(50% - 600px);
+    /*left: 80px;*/
+    /*left: 0;*/
+}
+
+.advantage {
+    display: flex;
+    align-items: center;
+    backdrop-filter: blur(19px);
+    background: rgb(234 249 255 / 29%);
+    padding: 30px 40px;
+    max-width: 530px;
+    height: 105px;
+    box-sizing: border-box;
+    justify-content: center;
+    margin: 0 5px;
+}
+
+.advantage:first-child {
+    /*width: 700px;*/
+    /*justify-content: center;*/
+}
+
+.advantage-text {
+    width: 230px;
+    margin-left: 30px;
+}
+
+.specialists {
+    padding: 173px 0 107px;
+}
+
+.specialists-title {
+    font-weight: 700;
+    font-size: 48px;
+    color: #12354b;
+    margin-bottom: 13px;
+}
+
+.specialists-description {
+    font-size: 24px;
+    color: #737373;
+    margin-bottom: 55px;
+    max-width: 530px;
+}
+
+.doctors {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(367px, 580px));
+    grid-row-gap: 70px;
+    grid-column-gap: 40px;
+}
+
+.doctor-item {
+    box-shadow: 0 13px 50px 0 rgba(192, 192, 192, 0.2);
+    background: linear-gradient(225deg, #f7f8fa 0%, #eff0f4 100%);
+    border-radius: 4px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 7px 0 25px;
+    transition: all .3s;
+}
+
+.doctor-item:hover {
+    box-shadow: 0 0 19px 6px rgba(0, 0, 0, 0.2);
+}
+
+.doctor-item-title {
+    margin-top: 59px;
+    font-weight: 700;
+    font-size: 29px;
+    color: #363636;
+    max-width: 280px;
+    margin-bottom: 12px;
+}
+
+.doctor-item-description {
+    font-size: 20px;
+    color: #3e3e3e;
+    margin-bottom: 35px;
+}
+
+.doctor-item-info {
+    font-size: 20px;
+    color: #3e3e3e;
+    width: 135px;
+    margin-bottom: 46px;
+}
+
+.doctor-info .button {
+    width: 240px;
+}
+
+.doctor-image img {
+    /*height: 433px;*/
+    height: 360px;
+    width: 290px;
+}
+
+.doctor-image img {
+    width: 100%;
+}
+
+.footer {
+    background: #f2f3f5;
+    padding: 12px 0;
+}
+
+.footer .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.rights {
+    width: 253px;
+    text-decoration: underline;
+}
+
+.networks {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100px;
+}
+
+.networks svg path, .networks svg {
+    transition: all .3s;
+    cursor: pointer;
+}
+
+.networks svg:hover path {
+    fill: #42bbff;
+    cursor: pointer;
+}
+
+
+
+
+
+/*--------------ДРУГАЯ СТРАНИЦА МЕДИЦИНСКИЕ УСЛУГИ--------------------------*/
+.services {
+    padding: 73px 0 71px;
+}
+
+.services h1 {
+    font-weight: 700;
+    font-size: 48px;
+    color: #12354b;
+    margin-bottom: 70px;
+}
+
+.services-carts {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.services-cart-item {
+    border-radius: 5px;
+    background-color: #fbfbfb;
+    width: 280px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 70px 0 57px;
+    margin-bottom: 40px;
+    box-shadow: 4px 3px 20px 0 rgb(0 0 0 / 10%);
+    transition: all .3s;
+}
+
+.services-cart-item img {
+    width: 50px;
+    height: 50px;
+}
+
+.services-cart-item-text {
+    margin-top: 20px;
+    font-weight: 700;
+    font-size: 26px;
+    color: #454545;
+}
+
+.services-cart-item:hover{
+    background-color: rgba(1, 103, 138, 0.71);
+    /* opacity: 10%; */
+}
+
+.services-cart-item:hover .services-cart-item-text {
+    color: #ffffffc9;
+}
+
+
+
+
+
+/*--------------ДРУГАЯ СТРАНИЦА ОНЛАЙН ЗАПИСЬ--------------------------*/
+.appointment {
+    padding: 65px 0 195px;
+}
+
+.appointment h1 {
+    text-align: center;
+    margin-bottom: 50px;
+    font-weight: 700;
+    font-size: 39px;
+    color: #12354b;
+}
+
+.appointment-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.appointment-form-text {
+    font-weight: 700;
+    font-size: 24px;
+    color: #12354b;
+    margin-bottom: 18px;
+}
+
+.appointment-form-input {
+    width: 613px;
+    font-weight: 400;
+    font-size: 17px;
+    padding: 15px 20px;
+    margin-bottom: 40px;
+    /*color: #000000;*/
+    color: #12354b;
+    box-sizing: border-box;
+    line-height: 1;
+    height: 50px;
+    outline: none;
+    border: 1px solid;
+}
+
+.appointment-form-input::placeholder {
+    border: 0;
+    color: #214765;
+}
+
+.appointment-form .button {
+    width: 295px;
+    height: 60px;
+}
+
+
+
+/*--------------ДРУГАЯ СТРАНИЦА ОНЛАЙН КОНСУЛЬТАЦИЯ--------------------------*/
+/*.consultation::before {*/
+/*    content: '';*/
+/*    background: linear-gradient(45deg, #e6f2ff 0%, #faf1ed 100%);*/
+/*    height: 560px;*/
+/*}*/
+
+.consultation {
+    background: linear-gradient(45deg, #e6f2ff 0%, #faf1ed 100%);
+    /*padding: 60px 0 72px;*/
+    /*overflow: hidden;*/
+}
+
+.consultation .container {
+    margin-top: 100px;
+    margin-bottom: 150px;
+    overflow: hidden;
+}
+
+.consultation-line {
+    padding: 60px 0 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.consultation-info h1 {
+    font-weight: 700;
+    font-size: 35px;
+    width: 550px;
+    margin-bottom: 40px;
+}
+
+.consultation-description {
+    font-weight: 400;
+    font-size: 21px;
+    line-height: 130%;
+    color: #262626;
+    width: 550px;
+    margin-bottom: 42px;
+}
+
+.consultation-input {
+    padding: 20px 16px;
+    border-radius: 5px;
+    border: 0;
+    width: 260px;
+    height: 60px;
+    background: #fefefe;
+    box-sizing: border-box;
+    outline: none;
+    font-size: 18px;
+    margin-right: 20px;
+}
+
+.consultation-input::placeholder {
+    font-size: 18px;
+    color: #bbb;
+    border: 0;
+}
+
+.consultation .button {
+    width: 260px;
+    height: 60px;
+    margin-bottom: 20px;
+}
+
+.consultation-right {
+    width: 490px;
+}
+
+.consultation-right span {
+    text-decoration: underline;
+}
+
+.consultation-image {
+    position: absolute;
+    width: 603px;
+    top: 91px;
+    right: 0;
+}
+
+.consultation-image img {
+    width: 100%;
+}
+
+
+
+
+
+
+
+/* СТАТУСЫ ЗАПИСИ*/
+.approved {
+    border-bottom: 2px solid darkblue;
+    color: darkblue;
+}
+
+.expectation {
+    border-bottom: 2px solid #FF9904;
+    color: #FF9904;
+}
+
+.completed {
+    border-bottom: 2px solid #75c04d;
+    color: #75c04d;
+}
+
+.canceled {
+    border-bottom: 2px solid rgba(255, 79, 79, 0.58);
+    color: rgba(255, 79, 79, 0.58);
+}
+
+.appointment-dot.approved {
+    background-color: darkblue;
+}
+
+.appointment-dot.expectation {
+    background-color: #FF9904;
+}
+
+.appointment-dot.completed {
+    background-color: #75c04d;
+}
+
+.appointment-dot.canceled {
+    background-color: rgba(255, 79, 79, 0.58);
+}
+
+
+/*------------НАШИ КОНТАКТЫ-------------*/
+.contacts-main {
+    padding: 50px 80px 195px;
+}
+
+.contacts-main h1 {
+    font-size: 40px;
+    margin-bottom: 40px;
+    text-align: center;
+}
+
+.contacts-main-main {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.contacts-main .contact {
+    display: flex;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.contacts-main .contact-details-description {
+    font-size: 22px;
+    margin-left: 15px;
+}
+
+
+
+
+.burger {
+    display: none;
+}
+
+.close {
+    display: none;
+}

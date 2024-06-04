@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Онлайн консультация</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style-user.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/adaptive.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/adaptive-user.css}">
+
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/5.0.6/jquery.inputmask.min.js"></script>
+    <link rel="icon" type="image/png" th:href="@{../images/логотип.png}"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<!-- шапка HEADER-->
+<div th:replace="blocks/header-user :: header"></div>
+
+<div class="consultation">
+    <div class="container">
+        <div class="consultation-line">
+            <div class="consultation-info">
+                <h1>Онлайн-консультация специалиста, Бесплатно</h1>
+                <div class="consultation-description">
+                    Укажите вой номер телефона, мы перезвоним и подберем для вас удобное время для консультации.
+                    Или позвоните нам сами — 8 029 452 86 79
+                </div>
+                <input type="text" class="consultation-input" id="inputPhone" placeholder="Телефон">
+                <button class="button" id="button-consultation"><span>Записаться на прием</span></button>
+                <div class="consultation-right">Записываясь на услугу вы даёте согласие на <span>обработку своих персональных
+                    данных</span>
+                </div>
+            </div>
+            <div class="consultation-image">
+                <img th:src="@{../images/all/consultation.png}" alt="Консультация">
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    $(document).ready(function(){
+        let phoneInput = $('#inputPhone');
+        phoneInput.inputmask({"mask": "9 (999) 9999999"});
+
+        $('#button-consultation').click(function(){
+            alert("Вы записались на консультацию, мы скоро вам перезвоним!");
+            phoneInput.val(''); //обновление значения в input
+        });
+    });
+</script>
+</body>
+</html>

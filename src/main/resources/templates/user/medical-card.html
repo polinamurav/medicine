@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Медицинская карта</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style-user.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/adaptive.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/adaptive-user.css}">
+
+    <link rel="icon" type="image/png" th:href="@{../images/логотип.png}"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<!-- шапка HEADER-->
+<div th:replace="blocks/header-user :: header"></div>
+
+<div class="medical-card">
+    <div class="container">
+        <div class="medical-card-name" th:text="${user.name} + ' '+ ${user.surname}"></div>
+        <div class="medical-card-actions">
+            <div class="medical-card-img">
+                <img th:if="${user.images != null}" th:src="@{/images/{id}(id=${user.images.id})}"
+                     alt="Изображение пользователя"/>
+                <img th:if="${user.images == null}" th:src="@{../images/specialist/user.png}" alt="Пользователь"/>
+            </div>
+
+            <div class="medical-card-adaptive">
+                <div class="medical-card-info">
+                    <p class="medical-card-birth" th:text="'Дата рождения: ' + ${user.birth}"></p>
+                    <div class="phone">
+                        <svg width="25" height="29" viewBox="0 0 20 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M14.2424 14.9938C7.84623 15.0029 2.99194 10.0904 2.99879 3.75024C2.99879 3.33619 3.33444 2.99866 3.74848 2.99866H5.7272C6.09873 2.99866 6.41435 3.27164 6.4689 3.63915C6.59966 4.51994 6.8561 5.37742 7.23043 6.1854L7.30747 6.35168C7.41459 6.58289 7.34199 6.85761 7.13462 7.00569C6.52183 7.44331 6.28764 8.32417 6.76503 9.0115C7.3641 9.87401 8.11925 10.629 8.98157 11.2278C9.66885 11.7051 10.5496 11.4709 10.9872 10.8582C11.1354 10.6507 11.4102 10.5781 11.6416 10.6853L11.8071 10.7619C12.6151 11.1362 13.4727 11.3927 14.3536 11.5234C14.7211 11.578 14.9939 11.8936 14.9939 12.2651V14.2441C14.9939 14.6582 14.6575 14.9938 14.2434 14.9938L14.2424 14.9938Z"
+                                  fill="#1A3444"/>
+                        </svg>
+                        <div class="phone-text" th:text="${user.phone}">80294528679</div>
+                    </div>
+                    <p class="medical-card-address" th:text="'Адрес проживания: ' + ${user.address}"></p>
+                    <p class="medical-card-history" th:if="${user.disease_history != null}"
+                       th:text="'История болезней: ' + ${user.disease_history}"></p>
+                    <p class="medical-card-history" th:if="${user.disease_history == null}"
+                       th:text="'История болезней: нет'"></p>
+                </div>
+                <!--            <a href="/edit-acc-user"  class="button"><span>Редактировать профиль</span></a>-->
+                <a th:href="@{/medical-card/edit-acc-user/{id}(id=${user.iduser})}" class="button"><span>Редактировать профиль</span></a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="medical-card user-appointment">
+    <div class="container">
+        <div class="appointment-text">
+            Назначенные приемы:
+        </div>
+        <div class="appointment-details" th:each="appointment : ${appointmentList}">
+            <div class="appointment-details-first">
+                <div class="appointment-dot completed"
+                     th:if="${appointment.status == appointment.status.COMPLETED}"></div>
+                <div class="appointment-dot expectation"
+                     th:if="${appointment.status == appointment.status.EXPECTATION}"></div>
+                <div class="appointment-dot approved"
+                     th:if="${appointment.status == appointment.status.APPROVED}"></div>
+                <div class="appointment-dot canceled"
+                     th:if="${appointment.status == appointment.status.CANCELED}"></div>
+                <div class="appointment-info">
+                    <div class="appointment-info-doctor"
+                         th:text="'Доктор: ' + ${appointment.doctor.name} + ' ' + ${appointment.doctor.surname}"></div>
+                    <div class="appointment-info-doctor" th:text="'Услуга: ' + ${appointment.service.name}"></div>
+                    <div class="appointment-info-doctor"
+                         th:text="'Дата приема - ' + ${#temporals.format(appointment.appointmentDate, 'dd.MM.yyyy HH:mm')}"></div>
+                    <div class="appointment-info-date"> Статус записи -
+                        <!--                        <span class="completed" th:if="${appointment.status == appointment.status.COMPLETED}" th:text="${appointment.status}"> ЗАВЕРШЕНО</span>-->
+                        <span class="completed"
+                              th:if="${appointment.status == appointment.status.COMPLETED}"> ЗАВЕРШЕНО</span>
+                        <span class="expectation" th:if="${appointment.status == appointment.status.EXPECTATION}"> В ОЖИДАНИИ ПОДТВЕРЖДЕНИЯ ОТ ВРАЧА</span>
+                        <span class="approved" th:if="${appointment.status == appointment.status.APPROVED}"> ПОДТВЕРЖДЕНА</span>
+                        <span class="canceled"
+                              th:if="${appointment.status == appointment.status.CANCELED}"> ОТМЕНЕНА</span>
+                    </div>
+                </div>
+            </div>
+            <div class="appointment-details-second"
+                 th:if="${appointment.status != appointment.status.CANCELED and appointment.status != appointment.status.COMPLETED}">
+                <form th:id="'cancelForm-' + ${appointment.idappointment}" th:action="@{/cancel-appointment}"
+                      method="post">
+                    <input type="hidden" name="appointmentId" th:value="${appointment.idappointment}"/>
+                    <button class="button" type="button" onclick="cancelAppointmentConfirmation(this)"><span>Отменить запись</span>
+                    </button>
+                </form>
+                <button class="button-notification" data-state="off">
+                    <svg width="34" height="39" viewBox="0 0 34 39" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M32 32.39L7.68 7.3L2.55 2.01L0 4.55L5.6 10.15L5.61 10.16C4.56 12.14 4 14.48 4 17V27L0 31V33H27.46L31.46 37L34 34.45L32 32.39ZM16 39C18.21 39 20 37.21 20 35H12C12 37.21 13.79 39 16 39ZM28 24.36V17C28 10.85 24.73 5.72 19 4.36V3C19 1.34 17.66 0 16 0C14.34 0 13 1.34 13 3V4.36C12.71 4.43 12.43 4.51 12.15 4.6C11.94 4.67 11.74 4.74 11.54 4.82C11.54 4.82 11.53 4.82 11.53 4.83C11.52 4.83 11.51 4.84 11.5 4.84C11.04 5.02 10.59 5.23 10.15 5.46C10.14 5.46 10.13 5.47 10.12 5.47L28 24.36Z"
+                              fill="#010101"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--<script src="../script.js"></script>-->
+<script th:inline="javascript">
+    function cancelAppointmentConfirmation(button) {
+        let result = confirm("Вы уверены, что хотите отменить запись?");
+        if (result) {
+            // Если пользователь подтвердил отмену, отправляем форму
+            let form = button.closest("form");
+            form.submit();
+        }
+    }
+
+    const buttonNotifications = document.querySelectorAll('.button-notification');
+    let isOriginalIcon = true;
+
+    const originalSvgPath = `
+            <svg width="34" height="39" viewBox="0 0 34 39" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M32 32.39L7.68 7.3L2.55 2.01L0 4.55L5.6 10.15L5.61 10.16C4.56 12.14 4 14.48 4 17V27L0 31V33H27.46L31.46 37L34 34.45L32 32.39ZM16 39C18.21 39 20 37.21 20 35H12C12 37.21 13.79 39 16 39ZM28 24.36V17C28 10.85 24.73 5.72 19 4.36V3C19 1.34 17.66 0 16 0C14.34 0 13 1.34 13 3V4.36C12.71 4.43 12.43 4.51 12.15 4.6C11.94 4.67 11.74 4.74 11.54 4.82C11.54 4.82 11.53 4.82 11.53 4.83C11.52 4.83 11.51 4.84 11.5 4.84C11.04 5.02 10.59 5.23 10.15 5.46C10.14 5.46 10.13 5.47 10.12 5.47L28 24.36Z" fill="#010101"/>
+            </svg>
+        `;
+
+    const newSvgPath = `
+            <svg width="40" height="39" viewBox="0 0 40 39" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M11.16 3.16L8.30005 0.3C3.51005 3.95 0.350049 9.59 0.0500488 16H4.05005C4.36005 10.7 7.09005 6.06 11.16 3.16ZM35.9501 16H39.9501C39.6501 9.59 36.4901 3.95 31.7001 0.3L28.85 3.15C32.91 6.06 35.6401 10.7 35.9501 16ZM32 17C32 10.85 28.73 5.72 23 4.36V3C23 1.34 21.66 0 20 0C18.34 0 17 1.34 17 3V4.36C11.27 5.72 8.00005 10.85 8.00005 17V27L4.00005 31V33H36V31L32 27V17ZM20 39C20.28 39 20.55 38.97 20.81 38.92C22.11 38.65 23.18 37.75 23.69 36.56C23.89 36.08 24 35.56 24 35H16C16 37.21 17.79 39 20 39V39Z" fill="#010101"/>
+            </svg>
+        `;
+
+    buttonNotifications.forEach(buttonNotification => {
+        buttonNotification.onclick = function () {
+            if (buttonNotification.getAttribute("data-state") === "off") {
+                alert("Вы включили уведомление о записи");
+                buttonNotification.innerHTML = newSvgPath;
+                buttonNotification.setAttribute("data-state", "on");
+            } else {
+                alert("Вы выключили уведомление о записи :(");
+                buttonNotification.innerHTML = originalSvgPath;
+                buttonNotification.setAttribute("data-state", "off");
+            }
+        }
+    });
+</script>
+</body>
+</html>

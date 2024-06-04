@@ -1,0 +1,1193 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+}
+
+.button {
+    width: 295px;
+    height: 60px;
+    box-sizing: border-box;
+    font-size: 20px;
+    text-align: center;
+    color: white;
+    padding: 15px 8px;
+    border: 0;
+    box-shadow: 0 1px 9px 0 rgba(0, 0, 0, 0.2);
+    background: #42bbff;
+    border-radius: 5px;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.button::after {
+    content: '';
+    width: 100%;
+    height: 100%;
+    background: #024094FF;
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-radius: 5px;
+    transform: translate(0, 100%);
+    transition: all .3s;
+}
+
+.button:hover::after {
+    transform: translate(0, 0);
+}
+
+.button > span {
+    z-index: 2;
+    position: relative;
+}
+
+.button > svg {
+    z-index: 3;
+    position: relative;
+}
+
+.layout {
+    display: flex;
+    min-height: 100vh;
+    position: relative;
+}
+
+.content {
+    background-color: #EDEEF3;
+    flex-grow: 1;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 40px;
+    background-color: #FFFFFF;
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.header-language-result {
+    display: none;
+}
+
+.header-search {
+    display: flex;
+    align-items: center;
+    position: relative;
+    margin-right: 40px;
+}
+
+.search-button {
+    border: 0;
+    cursor: pointer;
+}
+
+.header-search-input {
+    width: 300px;
+    border: 1px solid #e2e2e2;
+    border-radius: 10px;
+    padding: 12px 20px 12px 44px;
+    font-size: 14px;
+    color: #000;
+    background-color: #efeff5;
+    box-sizing: border-box;
+    outline: none;
+}
+
+.header-search-input::placeholder {
+    color: #b3b3b3;
+}
+
+.header-search-svg {
+    position: absolute;
+    top: 12px;
+    left: 20px;
+    cursor: pointer;
+}
+
+.header-language {
+    width: 60px;
+    background-color: #F5F6F7;
+    padding: 6px 12px;
+    border-radius: 4px;
+    margin-right: 20px;
+}
+
+.header-language a {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 143%;
+    color: #4a5154;
+    text-decoration: none;
+}
+
+.header-language a span {
+    margin-right: 6px;
+}
+
+.header-account {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 100px;
+    padding: 4px;
+    width: 40px;
+    height: 40px;
+    background-color: #FFD599;
+}
+
+.header-name {
+    font-weight: 600;
+    font-size: 18px;
+    color: #013488;
+    font-style: italic;
+}
+
+.header .button {
+    text-decoration: none;
+    font-size: 15px;
+    width: 136px;
+    height: 53px;
+    background-color: transparent;
+    border: 4px dotted #42bbff;
+    color: black;
+}
+
+
+.header .button:hover {
+    background: transparent;
+    border: 4px dotted #024094FF;
+}
+
+.header .button::after {
+    background: none;
+}
+
+.sidebar {
+    width: 250px;
+    background-color: #fff;
+    border-right: 1px solid #E2E2E2;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    flex-shrink: 0;
+}
+
+.logo {
+    margin-bottom: 18px;
+    margin-left: 24px;
+}
+
+.logo div {
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 100%;
+    text-transform: uppercase;
+    color: #959fa3;
+}
+
+.navigation ul {
+    list-style: none;
+}
+
+.navigation-item a {
+    border: 0;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    padding: 10px 12px;
+    cursor: pointer;
+    width: 100%;
+    background-color: #fff;
+    text-decoration: none;
+    color: #626C70;
+    transition: all 0.3s ease;
+}
+
+.navigation-item a:hover {
+    box-shadow: inset 3px 0 0 0 #0e5fd9;
+    background: #f0f6ff;
+    color: black;
+}
+
+.navigation-item a:hover svg path {
+    stroke: #0e5fd9;
+}
+
+.navigation-item a:hover .svg-fill path {
+    fill: #0e5fd9;
+}
+
+
+.navigation-item .active {
+    box-shadow: inset 3px 0 0 0 #0e5fd9;
+    background: #f0f6ff;
+    /*stroke: #0e5fd9;*/
+    color: black;
+}
+
+
+.navigation-item .active a {
+    box-shadow: inset 3px 0 0 0 #0e5fd9;
+    background: #467DF2;
+    color: #fff;
+    border-radius: 5px;
+}
+
+
+.navigation-item .active span, .navigation-item:hover span {
+    color: #000;
+}
+
+.navigation-item a span {
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 143%;
+    color: #626c70;
+    margin-left: 12px;
+}
+
+.navigation-item.active a {
+    background-color: #467DF2;
+    border-radius: 5px;
+    color: #fff;
+    fill: white;
+}
+
+.navigation-item a.active svg path {
+    stroke: #0e5fd9;
+}
+
+.navigation-item a.active .svg-fill path {
+    fill: #0e5fd9;
+}
+
+
+
+
+
+.main-admin h1 {
+    margin-top: 40px;
+    margin-left: 40px;
+    margin-bottom: 25px;
+}
+
+.doctors {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.doctor-item {
+    box-shadow: 0 13px 50px 0 rgba(192, 192, 192, 0.2);
+    background: linear-gradient(225deg, #f7f8fa 0%, #eff0f4 100%);
+    border-radius: 4px;
+    transition: all .3s;
+    cursor: pointer;
+    /*width: 370px;*/
+    width: 304px;
+    display: flex;
+    justify-content: space-between;
+    /*align-items: center;*/
+    padding: 0 7px 0 25px;
+    /*height: 287px;*/
+}
+
+.doctor-item:hover {
+    box-shadow: 0 0 19px 6px rgba(0, 0, 0, 0.2);
+}
+
+.doctor-item-title {
+    margin-top: 40px;
+    font-weight: 700;
+    font-size: 20px;
+    color: #363636;
+    margin-bottom: 35px;
+}
+
+.doctor-item-description {
+    font-size: 16px;
+    color: #3e3e3e;
+    margin-bottom: 10px;
+}
+
+.doctor-item-info {
+    font-size: 16px;
+    color: #3e3e3e;
+    margin-bottom: 15px;
+}
+
+.doctor-info .button {
+    width: 127px;
+    height: 36px;
+    font-size: 13px;
+    padding: 10px 3px;
+    margin-right: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.doctor-item-actions {
+    display: flex;
+    align-items: center;
+}
+
+.delete:hover path {
+    fill: #0636c9;
+}
+
+.doctor-image img {
+    height: 250px;
+    width: 167px;
+}
+
+.doctor-image img {
+    width: 100%;
+}
+
+
+/*ПОЛЬЗОВАТЕЛИ*/
+.main-admin {
+    padding-bottom: 40px;
+}
+
+.users-table {
+    background-color: white;
+    width: 900px;
+    margin: 0 auto;
+    border-collapse: collapse;
+}
+
+.users-table thead {
+    background-color: #F5F6F7;
+    color: #4A5154;
+
+}
+
+.users-table thead td {
+    padding: 12px 0;
+    font-size: 12px;
+}
+
+.users-table tbody td {
+    padding: 24px 0;
+    font-size: 14px;
+}
+
+.users-table tbody td {
+    border-collapse: collapse;
+    border: 1px solid #E5E7E8;
+}
+
+.user-delete {
+    background-color: #FDEDED;
+    border-radius: 50%;
+    border: 0;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+/*КАЛЕНДАРЬ*/
+.calendar {
+    background-color: white;
+    margin: 0 auto;
+    width: 900px;
+    padding-bottom: 20px;
+}
+
+.calendar-actions {
+    display: flex;
+    align-items: center;
+    padding: 24px;
+}
+
+.calendar-date {
+    margin: 0 auto;
+    font-size: 20px;
+}
+
+.calendar-table {
+    width: 850px;
+    border-collapse: collapse;
+    margin: 0 auto;
+}
+
+.calendar-table thead {
+    background-color: #F7F8F8;
+}
+
+.calendar-table thead td {
+    padding: 10px 0;
+    text-align: center;
+    border: 1px solid #ccc;
+}
+
+.calendar-table tbody td {
+    text-align: start;
+    vertical-align: top;
+    padding: 14px 8px;
+    justify-content: start;
+    border: 1px solid #ccc;
+    width: 123px;
+    height: 110px;
+}
+
+.calendar-navigation {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 88px;
+}
+
+.calendar-navigation-item {
+    background-color: #F0F6FF;
+    border-radius: 50%;
+    border: 0;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.calendar-cell {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    height: 95%;
+    position: relative;
+}
+
+.calendar-doctor-appointment {
+    background-color: #8D00D4;
+    color: white;
+    border-radius: 3px;
+    padding: 4px 10px;
+    font-weight: 500;
+    font-size: 14px;
+    margin-top: auto; /* This pushes the element to the bottom */
+    cursor: pointer;
+    transition: all 3s ease;
+}
+
+.calendar-doctor-appointment.red {
+    background: #e3007e;
+}
+
+.calendar-doctor-appointment.green {
+    background: #0c8c4e;
+}
+
+
+/*Профиль доктора*/
+.doctor-main {
+    padding: 30px 40px 50px 40px;
+}
+
+.doctor-main h1 {
+    font-weight: 600;
+    font-size: 32px;
+    color: #191b1c;
+    margin-bottom: 36px;
+}
+
+.doctor-main-preview {
+    background-color: white;
+    width: auto;
+    height: 283px;
+    position: relative;
+}
+
+.bannar {
+    background-image: url("../images/specialist/bannar1.png");
+    width: auto;
+    height: 160px;
+    background-size: cover;
+    background-position: center;
+}
+
+.doctor-main-preview-actions {
+    display: flex;
+    align-items: end;
+    padding-left: 50px;
+    position: absolute;
+    top: 110px;
+}
+
+.doctor-photo {
+    margin-right: 45px;
+    width: 122px;
+    height: 122px;
+    /*background-image: url("../images/specialist/1.png");*/
+    background-size: cover; /*cover*/
+    /*background-position: center;*/
+    background-repeat: no-repeat;
+    border: 8px solid white;
+    border-radius: 50%;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+}
+
+.doctor-photo img {
+    height: 130%;
+    border-radius: 50%;
+}
+
+.doctor-name {
+    font-weight: 600;
+    font-size: 24px;
+    color: #191b1c;
+}
+
+.doctor-status {
+    font-weight: 400;
+    font-size: 16px;
+    color: #626c70;
+    padding-bottom: 10px;
+}
+
+.doctor-edit {
+    margin-left: 100px;
+    padding-bottom: 10px;
+}
+
+.doctor-edit a {
+    color: black;
+}
+
+.doctor-edit a:hover {
+    color: #084cb4;
+}
+
+
+.doctor-main-actions {
+    display: flex;
+    align-items: start;
+    justify-content: space-between;
+}
+
+.doctor-approve-appointment {
+    margin-top: 40px;
+    background-color: white;
+    width: 444px;
+    border-radius: 8px;
+    box-sizing: border-box;
+}
+
+.doctor-approve-appointment h2 {
+    border-bottom: 1px solid #90979a;
+    font-weight: 500;
+    font-size: 20px;
+    color: #191b1c;
+    padding: 16px 18px;
+}
+
+.doctor-approve-appointment-cards {
+    padding: 16px 18px;
+    box-sizing: border-box;
+}
+
+.doctor-appointment-card {
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 25px;
+    position: relative;
+}
+
+.doctor-appointment-card.completed {
+    background-color: #f1ffe9;
+}
+
+.doctor-appointment-card.expectation {
+    background: #fff7e9;
+}
+
+.doctor-appointment-card.approved {
+    background: #e9f8ff;
+}
+
+.doctor-appointment-card.canceled {
+    background: #fdeded;
+}
+
+.doctor-appointment-card-text {
+    font-weight: 600;
+    font-size: 20px;
+    color: #191b1c;
+    margin-bottom: 25px;
+}
+
+.doctor-appointment-card-info {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    margin-bottom: 20px;
+    border-bottom: 2px solid transparent;
+}
+
+.doctor-appointment-card-info svg {
+    margin-right: 6px;
+}
+
+.doctor-appointment-card-info p {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 143%;
+    color: #4a5154;
+}
+
+.doctor-appointment-card-info.end span {
+    border-bottom: 2px solid darkblue;
+    margin-left: 5px;
+    color: darkblue;
+}
+
+.doctor-appointment-card-info.awaiting span {
+    border-bottom: 2px solid #FF9904;
+    margin-left: 5px;
+    color: #FF9904;
+}
+
+.doctor-appointment-card-info.completed span {
+    border-bottom: 2px solid #75c04d;
+    margin-left: 5px;
+    color: #75c04d;
+}
+
+.doctor-appointment-card-info.canceled span {
+    border-bottom: 2px solid rgba(255, 79, 79, 0.58);
+    margin-left: 5px;
+    color: rgba(255, 79, 79, 0.58);
+}
+
+.doctor-appointment-card .button {
+    width: 175px;
+    font-size: 16px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
+
+.doctor-appointment-card .button::after {
+}
+
+.doctor-appointment-card .button.completed {
+    width: 175px;
+    background: #75c04d;
+    color: white;
+}
+
+.doctor-appointment-card .button.completed::after {
+    background: #508c2d;
+}
+
+.doctor-appointment-card .button.expectation {
+    width: 175px;
+    background: #d78d4e;
+    color: white;
+}
+
+.doctor-appointment-card .button.expectation::after {
+    background: #bb7b45;
+}
+
+.doctor-appointment-card .button.canceled {
+    width: 175px;
+    background: rgba(255, 79, 79, 0.58);
+    color: black;
+}
+
+.doctor-appointment-card .button.canceled::after {
+    background: rgba(197, 38, 38, 0.58);
+}
+
+.doctor-appointment-card .button.confirmed {
+    width: 175px;
+    background: #4d8cc0;
+    color: white;
+}
+
+.doctor-appointment-card .button.confirmed::after {
+    background: #2d5d8c;
+    color: white;
+}
+
+.doctor-biography-main {
+    padding: 16px 18px;
+}
+
+.doctor-biography {
+    display: flex;
+    align-items: start;
+}
+
+.doctor-biography-title {
+    width: 120px;
+    margin-right: 20px;
+    font-size: 16px;
+    color: #959fa3;
+    margin-bottom: 12px;
+}
+
+.doctor-biography-description {
+    font-size: 16px;
+    color: #191b1c;
+}
+
+.contacts-text {
+    margin-top: 25px;
+    font-weight: 500;
+    font-size: 16px;
+    color: #191b1c;
+    margin-bottom: 20px;
+}
+
+.contact {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.contact svg {
+    margin-right: 12px;
+}
+
+.contact-details-title {
+    font-weight: 500;
+    font-size: 14px;
+    text-transform: uppercase;
+    color: #959fa3;
+}
+
+.contact-details-description {
+    font-weight: 400;
+    font-size: 16px;
+    color: #191b1c;
+}
+
+
+/*------------------------ПОПАП ДЛЯ КАЛЕНДАРЯ--------------------------*/
+/*.popup-calendar-info .doctor-appointment-card {*/
+/*    background-color: #e5fbff;*/
+/*    border-radius: 8px;*/
+/*    padding: 20px;*/
+/*    width: 300px;*/
+/*    height: 135px;*/
+/*    box-sizing: border-box;*/
+/*    position: fixed;*/
+/*    top: calc(50% - 60px);*/
+/*    left: calc(50% - 60px);*/
+/*    text-align: center;*/
+/*}*/
+
+/*.popup-calendar-info {*/
+/*    !*display: none;*!*/
+/*    position: fixed;*/
+/*    left: 0;*/
+/*    top: 0;*/
+/*    background: rgba(54, 54, 54, 0.8);*/
+/*    width: 100%;*/
+/*    height: 100%;*/
+/*    z-index: 10;*/
+/*}*/
+
+.popup-calendar-info {
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 25px;
+    background-color: #f3fcff;
+    width: 300px;
+    height: 135px;
+    box-sizing: border-box;
+    position: absolute;
+    bottom: 15%;
+    right: 50%;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    opacity: 0; /* Начальное состояние прозрачное */
+    visibility: hidden; /* Элемент невидим */
+    transition: opacity 0.3s ease, visibility 0.3s ease; /* Переход для прозрачности и видимости */
+    /*display: none;*/
+}
+
+.popup-calendar-info .doctor-appointment-card-info {
+    margin-bottom: 0;
+}
+
+.calendar-doctor-appointment:hover .popup-calendar-info {
+    /*display: block;*/
+    opacity: 1;
+    visibility: visible; /* Установить видимость */
+}
+
+
+/*-------------------------РЕДАКТИРОВАТЬ АККАУНТ У ДОКТОРА--------------------------*/
+.edit-account {
+    padding: 30px 40px 50px 40px;
+}
+
+.edit-account h1 {
+    font-weight: 600;
+    font-size: 32px;
+    color: #191b1c;
+    margin-bottom: 36px;
+}
+
+.edit-acc-form {
+    width: 452px;
+    display: flex;
+    flex-direction: column;
+}
+
+.card__image {
+    cursor: pointer;
+    margin-bottom: 20px;
+}
+
+.edit-acc-input-text {
+    font-size: 16px;
+    line-height: 169%;
+    color: #90979a;
+}
+
+.edit-acc-input {
+    margin-bottom: 20px;
+    border: 0;
+    background-color: transparent;
+    border-bottom: 1px solid #90979a;
+    width: 452px;
+    outline: none;
+    font-size: 20px;
+    line-height: 135%;
+    color: #323232;
+}
+
+.edit-acc-input:focus, .edit-acc-input:active {
+    border-bottom: 1px solid black;
+}
+
+.edit-acc-input.checkbox {
+    width: 16px;
+    height: 16px;
+    margin-right: 10px;
+    margin-bottom: 0;
+}
+
+.edit-acc-form .button {
+    width: 215px;
+    height: 50px;
+}
+
+
+
+
+/*---------------------------ПОСМОТРЕТЬ ВСЕ ЗАПИСИ ПАЦИЕНТА--------------------------*/
+.all-appointments {
+    padding: 30px 40px 50px 40px;
+}
+
+.user-appointments-cards {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 50px;
+}
+
+.user-appointments-name {
+    margin-bottom: 25px;
+}
+
+.all-appointments .doctor-appointment-card {
+    background: #edf4fd;
+}
+
+
+
+/*---------------------------ПОСМОТРЕТЬ МЕД КАРТУ ПАЦИЕНТА--------------------------*/
+.content .medical-card {
+    padding: 0 40px 0 40px;
+}
+
+
+.content .medical-card .container {
+    width: auto;
+    padding: 27px 100px 43px 55px;
+}
+
+.content .medical-card-actions {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+}
+
+.content .medical-card-img {
+    margin-right: 90px;
+}
+
+.content .medical-card-history-all {
+    display: flex;
+    align-items: center;
+}
+
+.medical-card-history-add {
+    margin-left: 25px;
+}
+
+.medical-card-history-Input {
+    display: none;
+}
+
+.medical-card-history-Input .edit-acc-input-text {
+    margin-top: 15px;
+}
+
+.medical-card-history-Input button {
+    padding: 8px 20px;
+    box-shadow: 0 1px 9px 0 rgba(0, 0, 0, 0.2);
+    background: #42bbff;
+    color: white;
+    border: 0;
+    font-size: 14px;
+}
+
+.closeModal {
+    position: absolute;
+    top: 145px;
+    right: 75px;
+    width: 24px;
+    height: 24px;
+    opacity: 0.5;
+    cursor: pointer;
+    transition: opacity ease 0.5s;
+
+    &:hover {
+        opacity: 1;
+    }
+}
+
+.closeModal::before,
+.closeModal::after {
+    content: '';
+    position: absolute;
+    top: 10px;
+    display: block;
+    width: 24px;
+    height: 3px;
+    background: #000;
+}
+
+.closeModal::before {
+    transform: rotate(45deg);
+}
+
+.closeModal::after {
+    transform: rotate(-45deg);
+}
+
+.phone {
+    display: flex;
+    align-items: center;
+    border-bottom: 3px solid transparent;
+    border-top: 3px solid transparent;
+    transition: all .3s;
+}
+
+.phone-text {
+    margin-left: 7px;
+}
+
+.phone:hover, .phone:hover path {
+    color: #01678a;
+    border-bottom: 3px solid #01678a;
+    cursor: pointer;
+    fill: #01678a;
+}
+
+
+
+
+/*---------------------------ПОСМОТРЕТЬ ВСЕХ ПАЦИЕНТОВ И ПОТОМ ИХ МЕД КАРТЫ--------------------------*/
+.doctor-users {
+    padding: 30px 40px 50px 40px;
+}
+
+.doctor-users h1 {
+    font-weight: 600;
+    font-size: 30px;
+    color: #191b1c;
+    margin-bottom: 36px;
+}
+
+.doctor-user {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px;
+    border: 1px solid #013488;
+    background-color: white;
+    border-radius: 8px;
+    margin-bottom: 25px;
+    transition: all .3s ease;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.doctor-user:hover {
+    box-shadow: 4px 5px 10px 5px rgba(0, 0, 0, 0.2);
+}
+
+.doctor-user-name {
+    font-size: 18px;
+    color: black;
+    text-decoration: none;
+}
+
+.doctor-user-more {
+    font-weight: 600;
+    font-size: 16px;
+    color: #013488;
+    font-style: italic;
+    text-decoration: underline;
+}
+
+/*.doctor-user-more:hover {*/
+/*    color: #013488;*/
+/*}*/
+
+
+
+
+/* СТАТУСЫ ЗАПИСИ*/
+.approved {
+    border-bottom: 2px solid darkblue;
+    color: darkblue;
+}
+
+.expectation {
+    border-bottom: 2px solid #FF9904;
+    color: #FF9904;
+}
+
+.completed {
+    border-bottom: 2px solid #75c04d;
+    color: #75c04d;
+}
+
+.canceled {
+    border-bottom: 2px solid rgba(255, 79, 79, 0.58);
+    color: rgba(255, 79, 79, 0.58);
+}
+
+.doctor-appointment-card .button.confirmed::after {
+    background: #2d5d8c;
+    color: white;
+}
+
+.ban {
+    padding: 5px 15px;
+    border: 2px solid #628fde;
+    background-color: white;
+    color: black;
+    cursor: pointer;
+}
+
+.ban:hover {
+    border: 2px solid #013488;
+}
+
+
+
+
+
+/* ОТОБРАЖЕНИЕ ДАШБОРДОВ */
+.appointment-statistics {
+    padding: 40px;
+}
+
+.appointment-statistics h1 {
+    margin-bottom: 25px;
+}
+
+.save-statistics {
+    border: 1px solid black;
+    background-color: #d9e7ff;
+    padding: 15px;
+    width: 401px;
+    box-sizing: border-box;
+    text-align: center;
+    margin-bottom: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.save-statistics-svg {
+    margin-right: 20px;
+    margin-left: -20px;
+}
+
+.save-statistics span {
+    font-size: 18px;
+    color: black;
+}
+
+.save-statistics-text div {
+    margin-top: 10px;
+}
+
+.button-savePdf {
+    border-radius: 10px;
+    background-color: white;
+    padding: 10px;
+    font-size: 14px;
+    color: black;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: all .3s;
+}
+
+.button-savePdf:hover {
+    background-color: #f4f6ff;
+    border: 1px solid #013488;
+}
+
+.statistics {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.statistics-item {
+    width: 400px;
+    height: 400px;
+    border: 1px solid;
+    margin-bottom: 30px;
+}
+
+.statistics-item h2 {
+    padding: 15px;
+    background-color: white;
+    font-size: 18px;
+    color: #013488;
+    text-align: center;
+    margin-bottom: 20px;
+}

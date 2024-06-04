@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Пользователи</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/admin.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/adaptive.css}">
+
+    <link rel="icon" type="image/png" th:href="@{../images/логотип.png}"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="_csrf" content="${_csrf.token}"/>
+    <meta name="_csrf_header" content="${_csrf.headerName}"/>
+</head>
+<body>
+
+
+<div class="layout">
+    <!-- шапка боковая панель АДМИН -->
+    <div th:replace="blocks/sidebar-admin :: sidebar"></div>
+
+    <div class="content">
+        <header class="header">
+            <div class="header-name">
+                Добро пожаловать: Администратор
+            </div>
+            <div class="header-actions">
+                <a class="button" href="/login"><span>Выйти</span></a>
+            </div>
+        </header>
+        <div class="main-admin">
+            <h1>Пользователи</h1>
+            <table class="users-table">
+                <thead align="center">
+                <tr>
+                    <td>ID</td>
+                    <td>Имя</td>
+                    <td>Телефон</td>
+                    <td>Активность</td>
+                    <td>Бан</td>
+                </tr>
+                </thead>
+                <tbody align="center">
+                <tr th:each="user : ${usersList}">
+                    <td th:text="${user.iduser}">647</td>
+                    <td th:text="${user.name} + ' ' + ${user.surname}">Иванов Иван</td>
+                    <td th:text="${user.phone}">80293859375</td>
+                    <td th:text="${user.active}"></td>
+                    <td>
+                        <form th:method="post" th:action="@{/admin-user-ban}" style="display: inline;">
+                            <input type="hidden" name="id" th:value="${user.iduser}">
+                            <input type="hidden" name="_csrf" th:value="${_csrf.token}">
+                            <input class="ban" id="ban" type="submit" th:value="${user.active ? 'Заблокировать' : 'Разблокировать'}">
+                        </form>
+                    </td>
+                    <div th:if="${#lists.isEmpty(usersList)}">Пользователей нет</div>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

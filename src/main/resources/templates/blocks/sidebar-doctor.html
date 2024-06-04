@@ -1,0 +1,75 @@
+<!-- шапка боковая панель ДОКТОР -->
+<div th:fragment="sidebar" xmlns:th="http://www.w3.org/1999/xhtml">
+    <aside class="sidebar">
+        <div class="logo">
+            <img th:src="@{/images/all/логотип.png}" alt="Логотип">
+            <div>Вита-центр</div>
+        </div>
+        <nav class="navigation">
+            <ul>
+                <li class="navigation-item">
+                    <a href="/doctor/doctor-main" th:classappend="${currentPath == '/doctor/doctor-main'} ? ' active'">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M16.875 16.875V9.02642C16.875 8.93934 16.8568 8.85322 16.8216 8.77358C16.7863 8.69395 16.7349 8.62255 16.6704 8.56397L10.42 2.88154C10.3049 2.77694 10.155 2.71899 9.99955 2.71899C9.84406 2.719 9.69415 2.77696 9.57911 2.88157L3.32954 8.56397C3.26511 8.62255 3.21364 8.69395 3.17842 8.77358C3.14319 8.85321 3.125 8.93932 3.125 9.0264V16.875"
+                                  stroke="#626C70" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M1.25 16.875H18.75" stroke="#626C70" stroke-width="1.25" stroke-linecap="round"
+                                  stroke-linejoin="round"/>
+                            <path d="M11.8745 16.8743V12.4993C11.8745 12.3335 11.8087 12.1745 11.6915 12.0573C11.5742 11.9401 11.4153 11.8743 11.2495 11.8743H8.74951C8.58375 11.8743 8.42478 11.9401 8.30757 12.0573C8.19036 12.1745 8.12451 12.3335 8.12451 12.4993V16.8743"
+                                  stroke="#626C70" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        <span>Главная</span>
+                    </a>
+                </li>
+                <li class="navigation-item">
+                    <a href="/doctor/calendar" th:classappend="${currentPath == '/doctor/calendar'} ? ' active'">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M16.25 3.125H3.75C3.40482 3.125 3.125 3.40482 3.125 3.75V16.25C3.125 16.5952 3.40482 16.875 3.75 16.875H16.25C16.5952 16.875 16.875 16.5952 16.875 16.25V3.75C16.875 3.40482 16.5952 3.125 16.25 3.125Z"
+                                  stroke="#626C70" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M13.75 1.875V4.375" stroke="#626C70" stroke-width="1.25" stroke-linecap="round"
+                                  stroke-linejoin="round"/>
+                            <path d="M6.25 1.875V4.375" stroke="#626C70" stroke-width="1.25" stroke-linecap="round"
+                                  stroke-linejoin="round"/>
+                            <path d="M3.125 6.875H16.875" stroke="#626C70" stroke-width="1.25" stroke-linecap="round"
+                                  stroke-linejoin="round"/>
+                        </svg>
+                        <span>Календарь</span>
+                    </a>
+                </li>
+                <li class="navigation-item">
+                    <a href="/doctor/all-appointments" th:classappend="${currentPath == '/doctor/all-appointments'} ? ' active'">
+                        <svg class="svg-fill" width="20" height="20" viewBox="0 0 36 40" fill="none"
+                             xmlns="http://www.w3.org/2000/svg">
+                            <path d="M32 4H23.63C22.81 1.68 20.61 0 18 0C15.39 0 13.19 1.68 12.37 4H4C1.79 4 0 5.79 0 8V36C0 38.21 1.79 40 4 40H32C34.21 40 36 38.21 36 36V8C36 5.79 34.21 4 32 4ZM18 4C19.1 4 20 4.89 20 6C20 7.11 19.1 8 18 8C16.9 8 16 7.11 16 6C16 4.89 16.9 4 18 4ZM22 32H8V28H22V32ZM28 24H8V20H28V24ZM28 16H8V12H28V16Z"
+                                  fill="#626C70"/>
+                        </svg>
+                        <span>Посмотреть записи пациентов</span>
+                    </a>
+                </li>
+                <li class="navigation-item">
+                    <a href="/doctor/users-name" th:classappend="${currentPath == '/doctor/users-name'} ? ' active'">
+                        <svg class="svg-fill" width="20" height="20" viewBox="0 0 44 36" fill="none"
+                             xmlns="http://www.w3.org/2000/svg">
+                            <path d="M40 0H4C1.8 0 0 1.8 0 4V32C0 34.2 1.8 36 4 36H40C42.2 36 44 34.2 44 32V4C44 1.8 42.2 0 40 0ZM40 26H4V4H40V26Z"
+                                  fill="#626C70"/>
+                        </svg>
+                        <span>Посмотреть медицинскую карту пациентов</span>
+                    </a>
+                </li>
+<!--                <li class="navigation-item">-->
+<!--                    <a th:href="@{/doctor/edit-acc/{id}(id=${use})}"  th:classappend="${currentPath.startsWith('/doctor/edit-acc/')} ? ' active' : ''">-->
+<!--                    <a href="@{/doctor/edit-acc/{id}}" >-->
+<!--                <li class="navigation-item" th:if="${user != null}">-->
+<!--                    <a th:href="@{/doctor/edit-acc/{id}(id=${user.id})}" th:classappend="${currentPath.startsWith('/doctor/edit-acc/')} ? ' active'">-->
+<!--                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">-->
+<!--                            <path d="M10 12.5C12.7614 12.5 15 10.2614 15 7.5C15 4.73858 12.7614 2.5 10 2.5C7.23858 2.5 5 4.73858 5 7.5C5 10.2614 7.23858 12.5 10 12.5Z"-->
+<!--                                  stroke="#626C70" stroke-width="1.25" stroke-miterlimit="10"/>-->
+<!--                            <path d="M2.4209 16.8743C3.1893 15.5442 4.29419 14.4398 5.62456 13.672C6.95493 12.9042 8.46393 12.5 9.99997 12.5C11.536 12.5 13.045 12.9043 14.3754 13.6721C15.7057 14.44 16.8106 15.5444 17.579 16.8744"-->
+<!--                                  stroke="#626C70" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>-->
+<!--                        </svg>-->
+<!--                        <span>Редактировать профиль</span>-->
+<!--                    </a>-->
+<!--                </li>-->
+            </ul>
+        </nav>
+    </aside>
+</div>

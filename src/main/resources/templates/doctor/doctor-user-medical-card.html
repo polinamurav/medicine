@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Медицинская карта</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style-user.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/admin.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/adaptive.css}">
+
+    <link rel="icon" type="image/png" th:href="@{../images/логотип.png}"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="_csrf" content="${_csrf.token}"/>
+    <meta name="_csrf_header" content="${_csrf.headerName}"/>
+</head>
+<body>
+
+<div class="layout">
+
+    <!-- шапка боковая панель ДОКТОР -->
+    <div th:replace="blocks/sidebar-doctor :: sidebar"></div>
+
+    <div class="content">
+        <!-- шапка HEADER доктора и админа с поисковиком -->
+        <div th:replace="blocks/header-D-A-search :: header"></div>
+
+        <div class="medical-card">
+            <div class="container">
+                <div class="medical-card-name" th:text="${user.name} + ' '+ ${user.surname}"></div>
+                <div class="medical-card-actions">
+                    <div class="medical-card-img">
+                        <img th:if="${user.images != null}" th:src="@{/images/{id}(id=${user.images.id})}" alt="Изображение пользователя"/>
+                        <img th:if="${user.images == null}" th:src="@{../images/specialist/user.png}" alt="Пользователь"/>
+                    </div>
+                    <div class="medical-card-info">
+                        <p class="medical-card-birth" th:text="'Дата рождения: ' + ${user.birth}"></p>
+                        <div class="phone">
+                            <svg width="25" height="29" viewBox="0 0 20 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M14.2424 14.9938C7.84623 15.0029 2.99194 10.0904 2.99879 3.75024C2.99879 3.33619 3.33444 2.99866 3.74848 2.99866H5.7272C6.09873 2.99866 6.41435 3.27164 6.4689 3.63915C6.59966 4.51994 6.8561 5.37742 7.23043 6.1854L7.30747 6.35168C7.41459 6.58289 7.34199 6.85761 7.13462 7.00569C6.52183 7.44331 6.28764 8.32417 6.76503 9.0115C7.3641 9.87401 8.11925 10.629 8.98157 11.2278C9.66885 11.7051 10.5496 11.4709 10.9872 10.8582C11.1354 10.6507 11.4102 10.5781 11.6416 10.6853L11.8071 10.7619C12.6151 11.1362 13.4727 11.3927 14.3536 11.5234C14.7211 11.578 14.9939 11.8936 14.9939 12.2651V14.2441C14.9939 14.6582 14.6575 14.9938 14.2434 14.9938L14.2424 14.9938Z"
+                                      fill="#1A3444"/>
+                            </svg>
+                            <div class="phone-text" th:text="${user.phone}">80294528679</div>
+                        </div>
+                        <p class="medical-card-address" th:text="'Адрес проживания: ' + ${user.address}"></p>
+                        <div class="medical-card-history-all">
+                            <p class="medical-card-history" th:if="${user.disease_history != null}" th:text="'История болезней: ' + ${user.disease_history}"></p>
+                            <p class="medical-card-history" th:if="${user.disease_history == null}" th:text="'История болезней: нет'"></p>
+<!--                            <a th:href="@{/doctor/add-illnesses/{id}(id=${user.iduser})}" id="addButton" class="medical-card-history-add">Добавить историю</a>-->
+                            <a href="#" id="addButton" class="medical-card-history-add">Добавить историю</a>
+                        </div>
+                        <div class="medical-card-history-Input" id="addForm">
+                            <form id="addIllnessForm" th:object="${user}" method="post" enctype="multipart/form-data"
+                                  th:action="@{/add-illnesses/{id}(id=${user.iduser})}">
+                                <input type="hidden" th:field="*{iduser}"/>
+                                <input type="hidden" data-th-name="${_csrf.parameterName}" data-th-value="${_csrf.token}">
+                                <label>
+                                    <div class="edit-acc-input-text">Добавьте историю болезней</div>
+                                    <input type="text" class="edit-acc-input" th:field="*{disease_history}">
+                                    <input type="hidden" data-th-name="${_csrf.parameterName}" data-th-value="${_csrf.token}">
+                                    <button type="submit">Сохранить</button>
+                                </label>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <!-- мой крестик -->
+                <a href="/doctor/users-name" class="closeModal"></a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script th:inline="javascript">
+    let addButton = document.getElementById("addButton");
+    let medicalCardHistoryAll = document.querySelector(".medical-card-history-all");
+    let medicalCardHistoryInput = document.querySelector(".medical-card-history-Input");
+
+    addButton.addEventListener('click', function() {
+        medicalCardHistoryAll.style.display = 'none';
+        medicalCardHistoryInput.style.display = 'block';
+    });
+</script>
+
+</body>
+</html>
